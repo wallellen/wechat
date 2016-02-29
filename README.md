@@ -5,6 +5,8 @@ wechat
 
 ===========
 
+[![Join the chat at https://gitter.im/wallellen/wechat](https://badges.gitter.im/wallellen/wechat.svg)](https://gitter.im/wallellen/wechat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ===========
 
 微信公众号、企业号Java SDK。
