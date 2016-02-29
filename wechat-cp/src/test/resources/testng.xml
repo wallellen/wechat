@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Weixin-java-tool-suite" verbose="1">
+  <test name="API_Test">
+    <classes>
+      <class name="com.wallellen.wechat.cp.api.WxCpBusyRetryTest"/>
+      <class name="com.wallellen.wechat.cp.api.WxCpBaseAPITest"/>
+      <class name="com.wallellen.wechat.cp.api.WxCpMessageAPITest"/>
+      <class name="com.wallellen.wechat.cp.api.WxMenuAPITest"/>
+      <class name="com.wallellen.wechat.cp.api.WxCpDepartAPITest"/>
+      <class name="com.wallellen.wechat.cp.api.WxCpMediaAPITest"/>
+      <class name="com.wallellen.wechat.cp.api.WxCpMessageRouterTest"/>
+      <class name="com.wallellen.wechat.cp.api.WxCpTagAPITest"/>
+      <class name="com.wallellen.wechat.cp.api.WxCpUserAPITest"/>
+    </classes>
+  </test>
+
+  <test name="Bean_Test">
+    <classes>
+      <class name="com.wallellen.wechat.cp.bean.WxCpMessageTest"/>
+      <class name="com.wallellen.wechat.cp.bean.WxCpXmlMessageTest"/>
+      <class name="com.wallellen.wechat.cp.bean.WxCpXmlOutImageMessageTest"/>
+      <class name="com.wallellen.wechat.cp.bean.WxCpXmlOutNewsMessageTest"/>
+      <class name="com.wallellen.wechat.cp.bean.WxCpXmlOutVideoMessageTest"/>
+      <class name="com.wallellen.wechat.cp.bean.WxCpXmlOutVoiceMessageTest"/>
+      <class name="com.wallellen.wechat.cp.bean.WxCpXmlOutTextMessageTest"/>
+    </classes>
+  </test>
+</suite>

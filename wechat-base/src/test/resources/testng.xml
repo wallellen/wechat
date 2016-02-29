@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Weixin-java-tool-suite" verbose="1">
+  <test name="Bean_Test">
+    <classes>
+      <class name="com.wallellen.wechat.common.bean.WxAccessTokenTest"/>
+      <class name="com.wallellen.wechat.common.bean.WxErrorTest"/>
+      <class name="com.wallellen.wechat.common.bean.WxMenuTest"/>
+      <class name="com.wallellen.wechat.common.util.crypto.WxCryptUtilTest"/>
+      <class name="com.wallellen.wechat.common.util.WxMessageInMemoryDuplicateCheckerTest"/>
+      <class name="com.wallellen.wechat.common.session.SessionTest" />
+    </classes>
+  </test>
+</suite>
