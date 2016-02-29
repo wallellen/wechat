@@ -177,7 +177,7 @@ public class WxCpMessageRouter {
             return null;
         }
 
-        final List<WxCpMessageRouterRule> matchRules = new ArrayList<WxCpMessageRouterRule>();
+        final List<WxCpMessageRouterRule> matchRules = new ArrayList<>();
         // 收集匹配的规则
         for (final WxCpMessageRouterRule rule : rules) {
             if (rule.test(wxMessage)) {
@@ -193,16 +193,12 @@ public class WxCpMessageRouter {
         }
 
         WxCpXmlOutMessage res = null;
-        final List<Future> futures = new ArrayList<Future>();
+        final List<Future> futures = new ArrayList<>();
         for (final WxCpMessageRouterRule rule : matchRules) {
             // 返回最后一个非异步的rule的执行结果
             if (rule.isAsync()) {
                 futures.add(
-                        executorService.submit(new Runnable() {
-                            public void run() {
-                                rule.service(wxMessage, wxCpService, sessionManager, exceptionHandler);
-                            }
-                        })
+                        executorService.submit(() -> rule.service(wxMessage, wxCpService, sessionManager, exceptionHandler))
                 );
             } else {
                 res = rule.service(wxMessage, wxCpService, sessionManager, exceptionHandler);
@@ -213,20 +209,15 @@ public class WxCpMessageRouter {
         }
 
         if (futures.size() > 0) {
-            executorService.submit(new Runnable() {
-                @Override
-                public void run() {
-                    for (Future future : futures) {
-                        try {
-                            future.get();
-                            log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUserName());
-                            // 异步操作结束，session访问结束
-                            sessionEndAccess(wxMessage);
-                        } catch (InterruptedException e) {
-                            log.error("Error happened when wait task finish", e);
-                        } catch (ExecutionException e) {
-                            log.error("Error happened when wait task finish", e);
-                        }
+            executorService.submit(() -> {
+                for (Future future : futures) {
+                    try {
+                        future.get();
+                        log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUserName());
+                        // 异步操作结束，session访问结束
+                        sessionEndAccess(wxMessage);
+                    } catch (InterruptedException | ExecutionException e) {
+                        log.error("Error happened when wait task finish", e);
                     }
                 }
             });

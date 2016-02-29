@@ -68,7 +68,6 @@ import com.wallellen.wechat.cp.util.json.WxCpGsonBuilder;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -169,8 +168,6 @@ public class WxCpServiceImpl implements WxCpService {
                         }
                         WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
                         wxCpConfigStorage.updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
-                    } catch (ClientProtocolException e) {
-                        throw new RuntimeException(e);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -594,7 +591,7 @@ public class WxCpServiceImpl implements WxCpService {
     }
 
     protected synchronized <T, E> T executeInternal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
-        if (uri.indexOf("access_token=") != -1) {
+        if (uri.contains("access_token=")) {
             throw new IllegalArgumentException("uri参数中不允许有access_token: " + uri);
         }
         String accessToken = getAccessToken(false);
@@ -620,8 +617,6 @@ public class WxCpServiceImpl implements WxCpService {
                 throw new WxErrorException(error);
             }
             return null;
-        } catch (ClientProtocolException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

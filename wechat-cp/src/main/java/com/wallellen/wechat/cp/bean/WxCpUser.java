@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class WxCpUser implements Serializable {
 
-    private final List<Attr> extAttrs = new ArrayList<Attr>();
+    private final List<Attr> extAttrs = new ArrayList<>();
     private String userId;
     private String name;
     private Integer[] departIds;
