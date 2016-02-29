@@ -6,7 +6,7 @@ script: "mvn clean install -Dmaven.test.skip=true"
 
 branches:
   only:
-    - develop
+    - master
 
 notifications:
   email:
