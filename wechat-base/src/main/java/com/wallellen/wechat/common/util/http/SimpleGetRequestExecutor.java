@@ -36,7 +36,6 @@ package com.wallellen.wechat.common.util.http;
 import com.wallellen.wechat.common.bean.result.WxError;
 import com.wallellen.wechat.common.exception.WxErrorException;
 import org.apache.http.HttpHost;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -52,7 +51,7 @@ import java.io.IOException;
 public class SimpleGetRequestExecutor implements RequestExecutor<String, String> {
 
     @Override
-    public String execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String queryParam) throws WxErrorException, ClientProtocolException, IOException {
+    public String execute(CloseableHttpClient httpClient, HttpHost httpProxy, String uri, String queryParam) throws WxErrorException, IOException {
         if (queryParam != null) {
             if (uri.indexOf('?') == -1) {
                 uri += '?';
@@ -65,7 +64,7 @@ public class SimpleGetRequestExecutor implements RequestExecutor<String, String>
             httpGet.setConfig(config);
         }
 
-        try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
             String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
             WxError error = WxError.fromJson(responseContent);
             if (error.getErrorCode() != 0) {

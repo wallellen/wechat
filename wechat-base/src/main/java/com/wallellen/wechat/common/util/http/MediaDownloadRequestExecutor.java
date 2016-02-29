@@ -39,7 +39,6 @@ import com.wallellen.wechat.common.util.StringUtils;
 import com.wallellen.wechat.common.util.fs.FileUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -72,7 +71,7 @@ public class MediaDownloadRequestExecutor implements RequestExecutor<File, Strin
 
 
     @Override
-    public File execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String queryParam) throws WxErrorException, ClientProtocolException, IOException {
+    public File execute(CloseableHttpClient httpClient, HttpHost httpProxy, String uri, String queryParam) throws WxErrorException, IOException {
         if (queryParam != null) {
             if (uri.indexOf('?') == -1) {
                 uri += '?';
@@ -86,7 +85,7 @@ public class MediaDownloadRequestExecutor implements RequestExecutor<File, Strin
             httpGet.setConfig(config);
         }
 
-        try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+        try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 
             Header[] contentTypeHeader = response.getHeaders("Content-Type");
             if (contentTypeHeader != null && contentTypeHeader.length > 0) {
@@ -104,8 +103,7 @@ public class MediaDownloadRequestExecutor implements RequestExecutor<File, Strin
                 return null;
             }
             String[] name_ext = fileName.split("\\.");
-            File localFile = FileUtils.createTmpFile(inputStream, name_ext[0], name_ext[1], tmpDirFile);
-            return localFile;
+            return FileUtils.createTmpFile(inputStream, name_ext[0], name_ext[1], tmpDirFile);
 
         }
 
@@ -116,8 +114,7 @@ public class MediaDownloadRequestExecutor implements RequestExecutor<File, Strin
         Pattern p = Pattern.compile(".*filename=\"(.*)\"");
         Matcher m = p.matcher(contentDispositionHeader[0].getValue());
         m.matches();
-        String fileName = m.group(1);
-        return fileName;
+        return m.group(1);
     }
 
 }

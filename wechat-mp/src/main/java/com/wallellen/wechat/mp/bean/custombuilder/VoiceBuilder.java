@@ -41,8 +41,6 @@ import com.wallellen.wechat.mp.bean.WxMpCustomMessage;
  * <pre>
  * 用法: WxMpCustomMessage m = WxMpCustomMessage.VOICE().mediaId(...).toUser(...).build();
  * </pre>
- *
- * @author chanjarster
  */
 public final class VoiceBuilder extends BaseBuilder<VoiceBuilder> {
     private String mediaId;

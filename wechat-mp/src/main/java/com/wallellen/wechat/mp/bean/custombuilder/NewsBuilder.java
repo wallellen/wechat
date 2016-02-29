@@ -43,14 +43,14 @@ import java.util.List;
  * 图文消息builder
  * <pre>
  * 用法:
- * WxMpCustomMessage m = WxMpCustomMessage.NEWS().addArticle(article).toUser(...).build();
+ * WxMpCustomMessage m = WxMpCustomMessage.NEWS()
+ *                          .addArticle(article)
+ *                          .toUser(...)
+ *                          .build();
  * </pre>
- *
- * @author chanjarster
  */
 public final class NewsBuilder extends BaseBuilder<NewsBuilder> {
-
-    private List<WxMpCustomMessage.WxArticle> articles = new ArrayList<WxMpCustomMessage.WxArticle>();
+    private List<WxMpCustomMessage.WxArticle> articles = new ArrayList<>();
 
     public NewsBuilder() {
         this.msgType = WxConsts.CUSTOM_MSG_NEWS;

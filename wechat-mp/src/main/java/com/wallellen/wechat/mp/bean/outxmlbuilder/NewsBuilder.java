@@ -54,9 +54,7 @@ public final class NewsBuilder extends BaseBuilder<NewsBuilder, WxMpXmlOutNewsMe
 
     public WxMpXmlOutNewsMessage build() {
         WxMpXmlOutNewsMessage m = new WxMpXmlOutNewsMessage();
-        for (WxMpXmlOutNewsMessage.Item item : articles) {
-            m.addArticle(item);
-        }
+        articles.forEach(m::addArticle);
         setCommon(m);
         return m;
     }

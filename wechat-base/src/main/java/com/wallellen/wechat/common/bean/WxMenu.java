@@ -47,7 +47,7 @@ import java.util.List;
  */
 public class WxMenu implements Serializable {
 
-    private List<WxMenuButton> buttons = new ArrayList<WxMenuButton>();
+    private List<WxMenuButton> buttons = new ArrayList<>();
 
     private WxMenuRule matchRule;
 

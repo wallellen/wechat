@@ -49,7 +49,7 @@ import java.io.IOException;
 public interface RequestExecutor<T, E> {
 
     /**
-     * @param httpclient 传入的httpClient
+     * @param httpClient 传入的httpClient
      * @param httpProxy  http代理对象，如果没有配置代理则为空
      * @param uri        uri
      * @param data       数据
@@ -58,6 +58,6 @@ public interface RequestExecutor<T, E> {
      * @throws ClientProtocolException
      * @throws IOException
      */
-    public T execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, E data) throws WxErrorException, ClientProtocolException, IOException;
+    public T execute(CloseableHttpClient httpClient, HttpHost httpProxy, String uri, E data) throws WxErrorException, IOException;
 
 }

@@ -45,7 +45,7 @@ public class WxMpTemplateMessage implements Serializable {
     private String templateId;
     private String url;
     private String topColor;
-    private List<WxMpTemplateData> datas = new ArrayList<WxMpTemplateData>();
+    private List<WxMpTemplateData> datas = new ArrayList<>();
 
     public String getToUser() {
         return toUser;

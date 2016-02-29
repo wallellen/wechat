@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class WxMpMassOpenIdsMessage implements Serializable {
 
-    private List<String> toUsers = new ArrayList<String>();
+    private List<String> toUsers = new ArrayList<>();
     private String msgType;
     private String content;
     private String mediaId;

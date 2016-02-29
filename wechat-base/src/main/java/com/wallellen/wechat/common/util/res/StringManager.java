@@ -69,7 +69,7 @@ import java.util.ResourceBundle;
 public class StringManager {
 
     private static final Map<String, Map<Locale, StringManager>> managers =
-            new Hashtable<String, Map<Locale, StringManager>>();
+            new Hashtable<>();
     private static int LOCALE_CACHE_SIZE = 10;
     /**
      * The ResourceBundle for this StringManager.

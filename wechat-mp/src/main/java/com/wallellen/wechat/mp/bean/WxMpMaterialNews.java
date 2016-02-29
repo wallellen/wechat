@@ -41,7 +41,7 @@ import java.util.List;
 
 public class WxMpMaterialNews implements Serializable {
 
-    private List<WxMpMaterialNewsArticle> articles = new ArrayList<WxMpMaterialNewsArticle>();
+    private List<WxMpMaterialNewsArticle> articles = new ArrayList<>();
 
     public List<WxMpMaterialNewsArticle> getArticles() {
         return articles;

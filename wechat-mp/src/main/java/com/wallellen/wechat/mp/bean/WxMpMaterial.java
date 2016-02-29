@@ -55,7 +55,7 @@ public class WxMpMaterial {
     }
 
     public Map<String, String> getForm() {
-        Map<String, String> form = new HashMap<String, String>();
+        Map<String, String> form = new HashMap<>();
         form.put("title", videoTitle);
         form.put("introduction", videoIntroduction);
         return form;

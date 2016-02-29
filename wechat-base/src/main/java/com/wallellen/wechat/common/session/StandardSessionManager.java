@@ -65,7 +65,7 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
      * The set of currently active Sessions for this Manager, keyed by
      * session identifier.
      */
-    protected Map<String, InternalSession> sessions = new ConcurrentHashMap<String, InternalSession>();
+    protected Map<String, InternalSession> sessions = new ConcurrentHashMap<>();
     /**
      * The maximum number of active Sessions allowed, or -1 for no limit.
      */
@@ -219,17 +219,14 @@ public class StandardSessionManager implements WxSessionManager, InternalSession
 
         // 当第一次有session创建的时候，开启session清理线程
         if (!backgroundProcessStarted.getAndSet(true)) {
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
-                        try {
-                            // 每秒清理一次
-                            Thread.sleep(backgroundProcessorDelay * 1000l);
-                            backgroundProcess();
-                        } catch (InterruptedException e) {
-                            log.error("SessionManagerImpl.backgroundProcess error", e);
-                        }
+            Thread t = new Thread(() -> {
+                while (true) {
+                    try {
+                        // 每秒清理一次
+                        Thread.sleep(backgroundProcessorDelay * 1000l);
+                        backgroundProcess();
+                    } catch (InterruptedException e) {
+                        log.error("SessionManagerImpl.backgroundProcess error", e);
                     }
                 }
             });

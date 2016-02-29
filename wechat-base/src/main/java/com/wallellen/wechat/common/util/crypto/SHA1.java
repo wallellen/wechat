@@ -39,7 +39,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 /**
- * Created by wallellen on 14/10/19.
+ * Created by <a href="mailto:wallellen@hotmail.com">WALLE</a> on 15/10/19.
  */
 public class SHA1 {
 

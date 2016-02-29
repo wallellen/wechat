@@ -836,7 +836,7 @@ public class WxMpServiceImpl implements WxMpService {
 
     @Override
     public WxMpPrepayIdResult getPrepayId(String openId, String outTradeNo, double amt, String body, String tradeType, String ip, String callbackUrl) {
-        Map<String, String> packageParams = new HashMap<String, String>();
+        Map<String, String> packageParams = new HashMap<>();
         packageParams.put("appid", wxMpConfigStorage.getAppId());
         packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
         packageParams.put("body", body);
@@ -853,7 +853,7 @@ public class WxMpServiceImpl implements WxMpService {
     public WxMpPrepayIdResult getPrepayId(final Map<String, String> parameters) {
         String nonce_str = System.currentTimeMillis() + "";
 
-        final SortedMap<String, String> packageParams = new TreeMap<String, String>(parameters);
+        final SortedMap<String, String> packageParams = new TreeMap<>(parameters);
         packageParams.put("appid", wxMpConfigStorage.getAppId());
         packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
         packageParams.put("nonce_str", nonce_str);
@@ -881,8 +881,7 @@ public class WxMpServiceImpl implements WxMpService {
             String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
             XStream xstream = XStreamInitializer.getInstance();
             xstream.alias("xml", WxMpPrepayIdResult.class);
-            WxMpPrepayIdResult wxMpPrepayIdResult = (WxMpPrepayIdResult) xstream.fromXML(responseContent);
-            return wxMpPrepayIdResult;
+            return (WxMpPrepayIdResult) xstream.fromXML(responseContent);
         } catch (IOException e) {
             throw new RuntimeException("Failed to get prepay id due to IO exception.", e);
         }
@@ -901,7 +900,7 @@ public class WxMpServiceImpl implements WxMpService {
 
     @Override
     public Map<String, String> getJSSDKPayInfo(String openId, String outTradeNo, double amt, String body, String tradeType, String ip, String callbackUrl) {
-        Map<String, String> packageParams = new HashMap<String, String>();
+        Map<String, String> packageParams = new HashMap<>();
         packageParams.put("appid", wxMpConfigStorage.getAppId());
         packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
         packageParams.put("body", body);
@@ -923,7 +922,7 @@ public class WxMpServiceImpl implements WxMpService {
             throw new RuntimeException(String.format("Failed to get prepay id due to error code '%s'(%s).", wxMpPrepayIdResult.getErr_code(), wxMpPrepayIdResult.getErr_code_des()));
         }
 
-        Map<String, String> payInfo = new HashMap<String, String>();
+        Map<String, String> payInfo = new HashMap<>();
         payInfo.put("appId", wxMpConfigStorage.getAppId());
         // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
         payInfo.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
@@ -940,7 +939,7 @@ public class WxMpServiceImpl implements WxMpService {
     public WxMpPayResult getJSSDKPayResult(String transactionId, String outTradeNo) {
         String nonce_str = System.currentTimeMillis() + "";
 
-        SortedMap<String, String> packageParams = new TreeMap<String, String>();
+        SortedMap<String, String> packageParams = new TreeMap<>();
         packageParams.put("appid", wxMpConfigStorage.getAppId());
         packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
         if (transactionId != null && !"".equals(transactionId.trim()))
@@ -971,8 +970,7 @@ public class WxMpServiceImpl implements WxMpService {
             String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
             XStream xstream = XStreamInitializer.getInstance();
             xstream.alias("xml", WxMpPayResult.class);
-            WxMpPayResult wxMpPayResult = (WxMpPayResult) xstream.fromXML(responseContent);
-            return wxMpPayResult;
+            return (WxMpPayResult) xstream.fromXML(responseContent);
         } catch (IOException e) {
             throw new RuntimeException("Failed to query order due to IO exception.", e);
         }
@@ -983,8 +981,7 @@ public class WxMpServiceImpl implements WxMpService {
         try {
             XStream xstream = XStreamInitializer.getInstance();
             xstream.alias("xml", WxMpPayCallback.class);
-            WxMpPayCallback wxMpCallback = (WxMpPayCallback) xstream.fromXML(xmlData);
-            return wxMpCallback;
+            return (WxMpPayCallback) xstream.fromXML(xmlData);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1000,7 +997,7 @@ public class WxMpServiceImpl implements WxMpService {
     public WxRedpackResult sendRedpack(Map<String, String> parameters) throws WxErrorException {
         String nonce_str = System.currentTimeMillis() + "";
 
-        SortedMap<String, String> packageParams = new TreeMap<String, String>(parameters);
+        SortedMap<String, String> packageParams = new TreeMap<>(parameters);
         packageParams.put("wxappid", wxMpConfigStorage.getAppId());
         packageParams.put("mch_id", wxMpConfigStorage.getPartnerId());
         packageParams.put("nonce_str", nonce_str);
@@ -1027,8 +1024,7 @@ public class WxMpServiceImpl implements WxMpService {
             String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
             XStream xstream = XStreamInitializer.getInstance();
             xstream.processAnnotations(WxRedpackResult.class);
-            WxRedpackResult wxMpRedpackResult = (WxRedpackResult) xstream.fromXML(responseContent);
-            return wxMpRedpackResult;
+            return (WxRedpackResult) xstream.fromXML(responseContent);
         } catch (IOException e) {
             log.error(MessageFormatter.format("The exception was happened when sending redpack '{}'.", request.toString()).getMessage(), e);
             WxError error = new WxError();

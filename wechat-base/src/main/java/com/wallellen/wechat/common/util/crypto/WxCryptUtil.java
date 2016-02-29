@@ -68,6 +68,12 @@ public class WxCryptUtil {
 
     private static final Base64 base64 = new Base64();
     private static final Charset CHARSET = Charset.forName("utf-8");
+    private static final String XML_TEMPLATE = "<xml>\n"
+            + "<Encrypt><![CDATA[%1$s]]></Encrypt>\n"
+            + "<MsgSignature><![CDATA[%2$s]]></MsgSignature>\n"
+            + "<TimeStamp>%3$s</TimeStamp>\n"
+            + "<Nonce><![CDATA[%4$s]]></Nonce>\n"
+            + "</xml>";
 
     private static final ThreadLocal<DocumentBuilder> builderLocal =
             new ThreadLocal<DocumentBuilder>() {
@@ -107,14 +113,13 @@ public class WxCryptUtil {
      *
      * @param packageParams 原始参数
      * @param signKey       加密Key(即 商户Key)
-     * @param charset       编码
      * @return 签名字符串
      */
     public static String createSign(Map<String, String> packageParams, String signKey) {
-        SortedMap<String, String> sortedMap = new TreeMap<String, String>();
+        SortedMap<String, String> sortedMap = new TreeMap<>();
         sortedMap.putAll(packageParams);
 
-        List<String> keys = new ArrayList<String>(packageParams.keySet());
+        List<String> keys = new ArrayList<>(packageParams.keySet());
         Collections.sort(keys);
 
 
@@ -160,13 +165,12 @@ public class WxCryptUtil {
         String encryptedXml = encrypt(genRandomStr(), plainText);
 
         // 生成安全签名
-        String timeStamp = timeStamp = Long.toString(System.currentTimeMillis() / 1000l);
+        String timeStamp = Long.toString(System.currentTimeMillis() / 1000l);
         String nonce = genRandomStr();
 
         try {
             String signature = SHA1.gen(token, timeStamp, nonce, encryptedXml);
-            String result = generateXml(encryptedXml, signature, timeStamp, nonce);
-            return result;
+            return generateXml(encryptedXml, signature, timeStamp, nonce);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -209,9 +213,7 @@ public class WxCryptUtil {
             byte[] encrypted = cipher.doFinal(unencrypted);
 
             // 使用BASE64对加密后的字符串进行编码
-            String base64Encrypted = base64.encodeToString(encrypted);
-
-            return base64Encrypted;
+            return base64.encodeToString(encrypted);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -337,7 +339,7 @@ public class WxCryptUtil {
     private String genRandomStr() {
         String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 16; i++) {
             int number = random.nextInt(base.length());
             sb.append(base.charAt(number));
@@ -355,14 +357,6 @@ public class WxCryptUtil {
      * @return 生成的xml字符串
      */
     private String generateXml(String encrypt, String signature, String timestamp, String nonce) {
-        String format =
-                "<xml>\n"
-                        + "<Encrypt><![CDATA[%1$s]]></Encrypt>\n"
-                        + "<MsgSignature><![CDATA[%2$s]]></MsgSignature>\n"
-                        + "<TimeStamp>%3$s</TimeStamp>\n"
-                        + "<Nonce><![CDATA[%4$s]]></Nonce>\n"
-                        + "</xml>";
-        return String.format(format, encrypt, signature, timestamp, nonce);
+        return String.format(XML_TEMPLATE, encrypt, signature, timestamp, nonce);
     }
-
 }

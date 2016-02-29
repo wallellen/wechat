@@ -41,7 +41,6 @@ import com.wallellen.wechat.common.util.json.WxGsonBuilder;
 import com.wallellen.wechat.mp.bean.WxMpMaterial;
 import com.wallellen.wechat.mp.bean.result.WxMpMaterialUploadResult;
 import org.apache.http.HttpHost;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -60,7 +59,7 @@ import java.util.Map;
 
 public class MaterialUploadRequestExecutor implements RequestExecutor<WxMpMaterialUploadResult, WxMpMaterial> {
 
-    public WxMpMaterialUploadResult execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, WxMpMaterial material) throws WxErrorException, ClientProtocolException, IOException {
+    public WxMpMaterialUploadResult execute(CloseableHttpClient httpClient, HttpHost httpProxy, String uri, WxMpMaterial material) throws WxErrorException, IOException {
         HttpPost httpPost = new HttpPost(uri);
         if (httpProxy != null) {
             RequestConfig response = RequestConfig.custom().setProxy(httpProxy).build();
@@ -85,7 +84,7 @@ public class MaterialUploadRequestExecutor implements RequestExecutor<WxMpMateri
             httpPost.setHeader("Content-Type", ContentType.MULTIPART_FORM_DATA.toString());
         }
 
-        CloseableHttpResponse response = httpclient.execute(httpPost);
+        CloseableHttpResponse response = httpClient.execute(httpPost);
         String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
         WxError error = WxError.fromJson(responseContent);
         if (error.getErrorCode() != 0) {

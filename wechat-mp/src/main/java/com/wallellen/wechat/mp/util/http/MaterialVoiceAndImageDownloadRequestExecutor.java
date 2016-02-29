@@ -40,7 +40,6 @@ import com.wallellen.wechat.common.util.http.RequestExecutor;
 import com.wallellen.wechat.common.util.json.WxGsonBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -67,7 +66,7 @@ public class MaterialVoiceAndImageDownloadRequestExecutor implements RequestExec
         this.tmpDirFile = tmpDirFile;
     }
 
-    public InputStream execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, ClientProtocolException, IOException {
+    public InputStream execute(CloseableHttpClient httpClient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, IOException {
         HttpPost httpPost = new HttpPost(uri);
         if (httpProxy != null) {
             RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
@@ -77,7 +76,7 @@ public class MaterialVoiceAndImageDownloadRequestExecutor implements RequestExec
         Map<String, String> params = new HashMap<>();
         params.put("media_id", materialId);
         httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
-        CloseableHttpResponse response = httpclient.execute(httpPost);
+        CloseableHttpResponse response = httpClient.execute(httpPost);
         // 下载媒体文件出错
         InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response);
         byte[] responseContent = IOUtils.toByteArray(inputStream);

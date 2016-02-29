@@ -62,14 +62,12 @@ public class XStreamTransformer {
      */
     @SuppressWarnings("unchecked")
     public static <T> T fromXml(Class<T> clazz, String xml) {
-        T object = (T) CLASS_2_XSTREAM_INSTANCE.get(clazz).fromXML(xml);
-        return object;
+        return (T) CLASS_2_XSTREAM_INSTANCE.get(clazz).fromXML(xml);
     }
 
     @SuppressWarnings("unchecked")
     public static <T> T fromXml(Class<T> clazz, InputStream is) {
-        T object = (T) CLASS_2_XSTREAM_INSTANCE.get(clazz).fromXML(is);
-        return object;
+        return (T) CLASS_2_XSTREAM_INSTANCE.get(clazz).fromXML(is);
     }
 
     /**
@@ -84,7 +82,7 @@ public class XStreamTransformer {
     }
 
     private static Map<Class, XStream> configXStreamInstance() {
-        Map<Class, XStream> map = new HashMap<Class, XStream>();
+        Map<Class, XStream> map = new HashMap<>();
         map.put(WxMpXmlMessage.class, config_WxMpXmlMessage());
         map.put(WxMpXmlOutMusicMessage.class, config_WxMpXmlOutMusicMessage());
         map.put(WxMpXmlOutNewsMessage.class, config_WxMpXmlOutNewsMessage());

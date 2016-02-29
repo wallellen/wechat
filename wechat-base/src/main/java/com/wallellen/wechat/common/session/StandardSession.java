@@ -55,7 +55,7 @@ public class StandardSession implements WxSession, InternalSession {
      */
     protected static final String EMPTY_ARRAY[] = new String[0];
     // ------------------------------ WxSession
-    protected Map<String, Object> attributes = new ConcurrentHashMap<String, Object>();
+    protected Map<String, Object> attributes = new ConcurrentHashMap<>();
     /**
      * The session identifier of this Session.
      */
@@ -123,7 +123,7 @@ public class StandardSession implements WxSession, InternalSession {
             throw new IllegalStateException
                     (sm.getString("sessionImpl.getAttributeNames.ise"));
 
-        Set<String> names = new HashSet<String>();
+        Set<String> names = new HashSet<>();
         names.addAll(attributes.keySet());
         return Collections.enumeration(names);
     }

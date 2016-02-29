@@ -41,13 +41,13 @@ public abstract class BaseBuilder<BuilderType, ValueType> {
 
     protected String fromUserName;
 
-    public BuilderType toUser(String touser) {
-        this.toUserName = touser;
+    public BuilderType toUser(String toUserName) {
+        this.toUserName = toUserName;
         return (BuilderType) this;
     }
 
-    public BuilderType fromUser(String fromusername) {
-        this.fromUserName = fromusername;
+    public BuilderType fromUser(String fromUserName) {
+        this.fromUserName = fromUserName;
         return (BuilderType) this;
     }
 

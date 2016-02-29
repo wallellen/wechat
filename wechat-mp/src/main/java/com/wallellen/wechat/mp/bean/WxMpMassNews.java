@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class WxMpMassNews implements Serializable {
 
-    private List<WxMpMassNewsArticle> articles = new ArrayList<WxMpMassNewsArticle>();
+    private List<WxMpMassNewsArticle> articles = new ArrayList<>();
 
     public List<WxMpMassNewsArticle> getArticles() {
         return articles;

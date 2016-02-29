@@ -92,22 +92,19 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
         if (backgroundProcessStarted.getAndSet(true)) {
             return;
         }
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        Thread.sleep(clearPeriod);
-                        Long now = System.currentTimeMillis();
-                        for (Map.Entry<String, Long> entry : msgId2Timestamp.entrySet()) {
-                            if (now - entry.getValue() > timeToLive) {
-                                msgId2Timestamp.entrySet().remove(entry);
-                            }
+        Thread t = new Thread(() -> {
+            try {
+                while (true) {
+                    Thread.sleep(clearPeriod);
+                    Long now = System.currentTimeMillis();
+                    for (Map.Entry<String, Long> entry : msgId2Timestamp.entrySet()) {
+                        if (now - entry.getValue() > timeToLive) {
+                            msgId2Timestamp.entrySet().remove(entry);
                         }
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         });
         t.setDaemon(true);
@@ -120,12 +117,9 @@ public class WxMessageInMemoryDuplicateChecker implements WxMessageDuplicateChec
             return false;
         }
         checkBackgroundProcessStarted();
-        Long timestamp = msgId2Timestamp.putIfAbsent(messageId, System.currentTimeMillis());
-        if (timestamp == null) {
-            // 第一次接收到这个消息
-            return false;
-        }
-        return true;
+
+        // 第一次接收到这个消息时 为false
+        return msgId2Timestamp.putIfAbsent(messageId, System.currentTimeMillis()) != null;
     }
 
 

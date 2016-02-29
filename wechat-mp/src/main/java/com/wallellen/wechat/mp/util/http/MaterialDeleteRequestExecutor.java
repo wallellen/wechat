@@ -39,7 +39,6 @@ import com.wallellen.wechat.common.util.http.RequestExecutor;
 import com.wallellen.wechat.common.util.http.Utf8ResponseHandler;
 import com.wallellen.wechat.common.util.json.WxGsonBuilder;
 import org.apache.http.HttpHost;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -57,7 +56,7 @@ public class MaterialDeleteRequestExecutor implements RequestExecutor<Boolean, S
         super();
     }
 
-    public Boolean execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, ClientProtocolException, IOException {
+    public Boolean execute(CloseableHttpClient httpClient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, IOException {
         HttpPost httpPost = new HttpPost(uri);
         if (httpProxy != null) {
             RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
@@ -67,7 +66,7 @@ public class MaterialDeleteRequestExecutor implements RequestExecutor<Boolean, S
         Map<String, String> params = new HashMap<>();
         params.put("media_id", materialId);
         httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
-        CloseableHttpResponse response = httpclient.execute(httpPost);
+        CloseableHttpResponse response = httpClient.execute(httpPost);
         String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
         WxError error = WxError.fromJson(responseContent);
         if (error.getErrorCode() != 0) {

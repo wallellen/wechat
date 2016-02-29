@@ -38,7 +38,6 @@ import com.wallellen.wechat.common.bean.result.WxMediaUploadResult;
 import com.wallellen.wechat.common.exception.WxErrorException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -58,7 +57,7 @@ import java.io.IOException;
 public class MediaUploadRequestExecutor implements RequestExecutor<WxMediaUploadResult, File> {
 
     @Override
-    public WxMediaUploadResult execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, File file) throws WxErrorException, ClientProtocolException, IOException {
+    public WxMediaUploadResult execute(CloseableHttpClient httpClient, HttpHost httpProxy, String uri, File file) throws WxErrorException, IOException {
         HttpPost httpPost = new HttpPost(uri);
         if (httpProxy != null) {
             RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
@@ -73,7 +72,7 @@ public class MediaUploadRequestExecutor implements RequestExecutor<WxMediaUpload
             httpPost.setEntity(entity);
             httpPost.setHeader("Content-Type", ContentType.MULTIPART_FORM_DATA.toString());
         }
-        try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
+        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
             WxError error = WxError.fromJson(responseContent);
             if (error.getErrorCode() != 0) {

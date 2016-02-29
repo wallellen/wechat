@@ -61,7 +61,7 @@ public class WxMpCustomMessage implements Serializable {
     private String description;
     private String musicUrl;
     private String hqMusicUrl;
-    private List<WxArticle> articles = new ArrayList<WxArticle>();
+    private List<WxArticle> articles = new ArrayList<>();
 
     /**
      * 获得文本消息builder
