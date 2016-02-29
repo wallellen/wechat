@@ -9,25 +9,25 @@ import org.testng.annotations.Test;
 
 /**
  * 基础API测试
- * @author wallellen
  *
+ * @author wallellen
  */
 @Test(groups = "baseAPI")
 @Guice(modules = ApiTestModule.class)
 public class WxCpBaseAPITest {
 
-  @Inject
-  protected WxCpServiceImpl wxService;
+    @Inject
+    protected WxCpServiceImpl wxService;
 
-  public void testRefreshAccessToken() throws WxErrorException {
-    WxCpConfigStorage configStorage = wxService.wxCpConfigStorage;
-    String before = configStorage.getAccessToken();
-    wxService.getAccessToken(false);
+    public void testRefreshAccessToken() throws WxErrorException {
+        WxCpConfigStorage configStorage = wxService.wxCpConfigStorage;
+        String before = configStorage.getAccessToken();
+        wxService.getAccessToken(false);
 
-    String after = configStorage.getAccessToken();
+        String after = configStorage.getAccessToken();
 
-    Assert.assertNotEquals(before, after);
-    Assert.assertTrue(StringUtils.isNotBlank(after));
-  }
+        Assert.assertNotEquals(before, after);
+        Assert.assertTrue(StringUtils.isNotBlank(after));
+    }
 
 }

@@ -8,7 +8,11 @@
  */
 package com.wallellen.wechat.mp.util.json;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.wallellen.wechat.common.util.json.GsonHelper;
 import com.wallellen.wechat.mp.bean.WxMpMaterialNews;
 import com.wallellen.wechat.mp.bean.result.WxMpMaterialNewsBatchGetResult;
@@ -18,19 +22,19 @@ import java.util.Date;
 
 public class WxMpMaterialNewsBatchGetGsonItemAdapter implements JsonDeserializer<WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem> {
 
-  public WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-    WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem wxMaterialNewsBatchGetNewsItem = new WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem();
-    JsonObject json = jsonElement.getAsJsonObject();
-    if (json.get("media_id") != null && !json.get("media_id").isJsonNull()) {
-      wxMaterialNewsBatchGetNewsItem.setMediaId(GsonHelper.getAsString(json.get("media_id")));
+    public WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem wxMaterialNewsBatchGetNewsItem = new WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem();
+        JsonObject json = jsonElement.getAsJsonObject();
+        if (json.get("media_id") != null && !json.get("media_id").isJsonNull()) {
+            wxMaterialNewsBatchGetNewsItem.setMediaId(GsonHelper.getAsString(json.get("media_id")));
+        }
+        if (json.get("update_time") != null && !json.get("update_time").isJsonNull()) {
+            wxMaterialNewsBatchGetNewsItem.setUpdateTime(new Date(1000 * GsonHelper.getAsLong(json.get("update_time"))));
+        }
+        if (json.get("content") != null && !json.get("content").isJsonNull()) {
+            JsonObject newsItem = json.getAsJsonObject("content");
+            wxMaterialNewsBatchGetNewsItem.setContent(WxMpGsonBuilder.create().fromJson(newsItem, WxMpMaterialNews.class));
+        }
+        return wxMaterialNewsBatchGetNewsItem;
     }
-    if (json.get("update_time") != null && !json.get("update_time").isJsonNull()) {
-      wxMaterialNewsBatchGetNewsItem.setUpdateTime(new Date(1000 * GsonHelper.getAsLong(json.get("update_time"))));
-    }
-    if (json.get("content") != null && !json.get("content").isJsonNull()) {
-      JsonObject newsItem = json.getAsJsonObject("content");
-      wxMaterialNewsBatchGetNewsItem.setContent(WxMpGsonBuilder.create().fromJson(newsItem, WxMpMaterialNews.class));
-    }
-    return wxMaterialNewsBatchGetNewsItem;
-  }
 }

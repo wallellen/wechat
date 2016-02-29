@@ -1,84 +1,84 @@
 package com.wallellen.wechat.mp.bean.result;
 
-import java.io.Serializable;
-
 import com.wallellen.wechat.mp.util.json.WxMpGsonBuilder;
+
+import java.io.Serializable;
 
 public class WxMpOAuth2AccessToken implements Serializable {
 
-  private String accessToken;
+    private String accessToken;
 
-  private int expiresIn = -1;
+    private int expiresIn = -1;
 
-  private String refreshToken;
+    private String refreshToken;
 
-  private String openId;
+    private String openId;
 
-  private String scope;
+    private String scope;
 
-  private String unionId;
+    private String unionId;
 
-  public String getRefreshToken() {
-    return refreshToken;
-  }
+    public static WxMpOAuth2AccessToken fromJson(String json) {
+        return WxMpGsonBuilder.create().fromJson(json, WxMpOAuth2AccessToken.class);
+    }
 
-  public void setRefreshToken(String refreshToken) {
-    this.refreshToken = refreshToken;
-  }
+    public String getRefreshToken() {
+        return refreshToken;
+    }
 
-  public String getOpenId() {
-    return openId;
-  }
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 
-  public void setOpenId(String openId) {
-    this.openId = openId;
-  }
+    public String getOpenId() {
+        return openId;
+    }
 
-  public String getScope() {
-    return scope;
-  }
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
 
-  public void setScope(String scope) {
-    this.scope = scope;
-  }
+    public String getScope() {
+        return scope;
+    }
 
-  public String getAccessToken() {
-    return accessToken;
-  }
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
 
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
-  }
+    public String getAccessToken() {
+        return accessToken;
+    }
 
-  public int getExpiresIn() {
-    return expiresIn;
-  }
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
-  public void setExpiresIn(int expiresIn) {
-    this.expiresIn = expiresIn;
-  }
+    public int getExpiresIn() {
+        return expiresIn;
+    }
 
-  public String getUnionId() {
-    return unionId;
-  }
+    public void setExpiresIn(int expiresIn) {
+        this.expiresIn = expiresIn;
+    }
 
-  public void setUnionId(String unionId) {
-    this.unionId = unionId;
-  }
+    public String getUnionId() {
+        return unionId;
+    }
 
-  public static WxMpOAuth2AccessToken fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(json, WxMpOAuth2AccessToken.class);
-  }
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
 
-  @Override
-  public String toString() {
-    return "WxMpOAuth2AccessToken{" +
-        "accessToken='" + accessToken + '\'' +
-        ", expiresTime=" + expiresIn +
-        ", refreshToken='" + refreshToken + '\'' +
-        ", openId='" + openId + '\'' +
-        ", scope='" + scope + '\'' +
-        ", unionId='" + unionId + '\'' +
-        '}';
-  }
+    @Override
+    public String toString() {
+        return "WxMpOAuth2AccessToken{" +
+                "accessToken='" + accessToken + '\'' +
+                ", expiresTime=" + expiresIn +
+                ", refreshToken='" + refreshToken + '\'' +
+                ", openId='" + openId + '\'' +
+                ", scope='" + scope + '\'' +
+                ", unionId='" + unionId + '\'' +
+                '}';
+    }
 }

@@ -7,11 +7,12 @@ import com.wallellen.wechat.cp.bean.WxCpXmlMessage;
  */
 public interface WxCpMessageMatcher {
 
-  /**
-   * 消息是否匹配某种模式
-   * @param message
-   * @return
-   */
-  public boolean match(WxCpXmlMessage message);
+    /**
+     * 消息是否匹配某种模式
+     *
+     * @param message
+     * @return
+     */
+    public boolean match(WxCpXmlMessage message);
 
 }

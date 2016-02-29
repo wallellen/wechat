@@ -19,12 +19,12 @@ import java.lang.reflect.Type;
 
 public class WxMpMaterialArticleUpdateGsonAdapter implements JsonSerializer<WxMpMaterialArticleUpdate> {
 
-  public JsonElement serialize(WxMpMaterialArticleUpdate wxMpMaterialArticleUpdate, Type typeOfSrc, JsonSerializationContext context) {
-    JsonObject articleUpdateJson = new JsonObject();
-    articleUpdateJson.addProperty("media_id", wxMpMaterialArticleUpdate.getMediaId());
-    articleUpdateJson.addProperty("index", wxMpMaterialArticleUpdate.getIndex());
-    articleUpdateJson.add("articles", WxMpGsonBuilder.create().toJsonTree(wxMpMaterialArticleUpdate.getArticles(), WxMpMaterialNews.WxMpMaterialNewsArticle.class));
-    return articleUpdateJson;
-  }
+    public JsonElement serialize(WxMpMaterialArticleUpdate wxMpMaterialArticleUpdate, Type typeOfSrc, JsonSerializationContext context) {
+        JsonObject articleUpdateJson = new JsonObject();
+        articleUpdateJson.addProperty("media_id", wxMpMaterialArticleUpdate.getMediaId());
+        articleUpdateJson.addProperty("index", wxMpMaterialArticleUpdate.getIndex());
+        articleUpdateJson.add("articles", WxMpGsonBuilder.create().toJsonTree(wxMpMaterialArticleUpdate.getArticles(), WxMpMaterialNews.WxMpMaterialNewsArticle.class));
+        return articleUpdateJson;
+    }
 
 }

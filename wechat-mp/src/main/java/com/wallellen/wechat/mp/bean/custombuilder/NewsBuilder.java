@@ -12,25 +12,25 @@ import java.util.List;
  * 用法:
  * WxMpCustomMessage m = WxMpCustomMessage.NEWS().addArticle(article).toUser(...).build();
  * </pre>
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public final class NewsBuilder extends BaseBuilder<NewsBuilder> {
 
-  private List<WxMpCustomMessage.WxArticle> articles = new ArrayList<WxMpCustomMessage.WxArticle>();
-  
-  public NewsBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_NEWS;
-  }
+    private List<WxMpCustomMessage.WxArticle> articles = new ArrayList<WxMpCustomMessage.WxArticle>();
 
-  public NewsBuilder addArticle(WxMpCustomMessage.WxArticle article) {
-    this.articles.add(article);
-    return this;
-  }
+    public NewsBuilder() {
+        this.msgType = WxConsts.CUSTOM_MSG_NEWS;
+    }
 
-  public WxMpCustomMessage build() {
-    WxMpCustomMessage m = super.build();
-    m.setArticles(this.articles);
-    return m;
-  }
+    public NewsBuilder addArticle(WxMpCustomMessage.WxArticle article) {
+        this.articles.add(article);
+        return this;
+    }
+
+    public WxMpCustomMessage build() {
+        WxMpCustomMessage m = super.build();
+        m.setArticles(this.articles);
+        return m;
+    }
 }

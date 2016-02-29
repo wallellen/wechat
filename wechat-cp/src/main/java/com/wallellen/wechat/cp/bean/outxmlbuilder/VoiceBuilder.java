@@ -7,18 +7,18 @@ import com.wallellen.wechat.cp.bean.WxCpXmlOutVoiceMessage;
  */
 public final class VoiceBuilder extends BaseBuilder<VoiceBuilder, WxCpXmlOutVoiceMessage> {
 
-  private String mediaId;
+    private String mediaId;
 
-  public VoiceBuilder mediaId(String mediaId) {
-    this.mediaId = mediaId;
-    return this;
-  }
-  
-  public WxCpXmlOutVoiceMessage build() {
-    WxCpXmlOutVoiceMessage m = new WxCpXmlOutVoiceMessage();
-    setCommon(m);
-    m.setMediaId(mediaId);
-    return m;
-  }
-  
+    public VoiceBuilder mediaId(String mediaId) {
+        this.mediaId = mediaId;
+        return this;
+    }
+
+    public WxCpXmlOutVoiceMessage build() {
+        WxCpXmlOutVoiceMessage m = new WxCpXmlOutVoiceMessage();
+        setCommon(m);
+        m.setMediaId(mediaId);
+        return m;
+    }
+
 }

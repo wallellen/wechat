@@ -8,7 +8,12 @@
  */
 package com.wallellen.wechat.mp.util.json;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.wallellen.wechat.common.util.json.GsonHelper;
 import com.wallellen.wechat.mp.bean.result.WxMpUserList;
 
@@ -16,19 +21,19 @@ import java.lang.reflect.Type;
 
 public class WxUserListGsonAdapter implements JsonDeserializer<WxMpUserList> {
 
-  public WxMpUserList deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    JsonObject o = json.getAsJsonObject();
-    WxMpUserList wxMpUserList = new WxMpUserList();
-    wxMpUserList.setTotal(GsonHelper.getInteger(o, "total"));
-    wxMpUserList.setCount(GsonHelper.getInteger(o, "count"));
-    wxMpUserList.setNextOpenId(GsonHelper.getString(o, "next_openid"));
-    if (o.get("data") != null && !o.get("data").isJsonNull() && !o.get("data").getAsJsonObject().get("openid").isJsonNull()) {
-      JsonArray data = o.get("data").getAsJsonObject().get("openid").getAsJsonArray();
-      for (int i = 0; i < data.size(); i++) {
-        wxMpUserList.getOpenIds().add(GsonHelper.getAsString(data.get(i)));
-      }
+    public WxMpUserList deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        JsonObject o = json.getAsJsonObject();
+        WxMpUserList wxMpUserList = new WxMpUserList();
+        wxMpUserList.setTotal(GsonHelper.getInteger(o, "total"));
+        wxMpUserList.setCount(GsonHelper.getInteger(o, "count"));
+        wxMpUserList.setNextOpenId(GsonHelper.getString(o, "next_openid"));
+        if (o.get("data") != null && !o.get("data").isJsonNull() && !o.get("data").getAsJsonObject().get("openid").isJsonNull()) {
+            JsonArray data = o.get("data").getAsJsonObject().get("openid").getAsJsonArray();
+            for (int i = 0; i < data.size(); i++) {
+                wxMpUserList.getOpenIds().add(GsonHelper.getAsString(data.get(i)));
+            }
+        }
+        return wxMpUserList;
     }
-    return wxMpUserList;
-  }
 
 }

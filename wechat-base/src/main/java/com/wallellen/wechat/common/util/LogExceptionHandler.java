@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 
 public class LogExceptionHandler implements WxErrorExceptionHandler {
 
-  private Logger log = LoggerFactory.getLogger(WxErrorExceptionHandler.class);
+    private Logger log = LoggerFactory.getLogger(WxErrorExceptionHandler.class);
 
-  @Override
-  public void handle(WxErrorException e) {
+    @Override
+    public void handle(WxErrorException e) {
 
-    log.error("Error happens", e);
+        log.error("Error happens", e);
 
-  }
+    }
 
 }

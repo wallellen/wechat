@@ -1,7 +1,7 @@
 package com.wallellen.wechat.mp.util.http;
 
 import com.wallellen.wechat.common.bean.result.WxError;
-import  com.wallellen.wechat.common.exception.WxErrorException;
+import com.wallellen.wechat.common.exception.WxErrorException;
 import com.wallellen.wechat.common.util.http.RequestExecutor;
 import com.wallellen.wechat.common.util.http.Utf8ResponseHandler;
 import com.wallellen.wechat.common.util.json.WxGsonBuilder;
@@ -21,28 +21,28 @@ import java.util.Map;
 
 public class MaterialNewsInfoRequestExecutor implements RequestExecutor<WxMpMaterialNews, String> {
 
-  public MaterialNewsInfoRequestExecutor() {
-    super();
-  }
-
-  public WxMpMaterialNews execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, ClientProtocolException, IOException {
-    HttpPost httpPost = new HttpPost(uri);
-    if (httpProxy != null) {
-      RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
-      httpPost.setConfig(config);
+    public MaterialNewsInfoRequestExecutor() {
+        super();
     }
 
-    Map<String, String> params = new HashMap<>();
-    params.put("media_id", materialId);
-    httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
-    CloseableHttpResponse response = httpclient.execute(httpPost);
-    String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-    WxError error = WxError.fromJson(responseContent);
-    if (error.getErrorCode() != 0) {
-      throw new WxErrorException(error);
-    } else {
-      return WxMpGsonBuilder.create().fromJson(responseContent, WxMpMaterialNews.class);
+    public WxMpMaterialNews execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, ClientProtocolException, IOException {
+        HttpPost httpPost = new HttpPost(uri);
+        if (httpProxy != null) {
+            RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
+            httpPost.setConfig(config);
+        }
+
+        Map<String, String> params = new HashMap<>();
+        params.put("media_id", materialId);
+        httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
+        CloseableHttpResponse response = httpclient.execute(httpPost);
+        String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
+        WxError error = WxError.fromJson(responseContent);
+        if (error.getErrorCode() != 0) {
+            throw new WxErrorException(error);
+        } else {
+            return WxMpGsonBuilder.create().fromJson(responseContent, WxMpMaterialNews.class);
+        }
     }
-  }
 
 }

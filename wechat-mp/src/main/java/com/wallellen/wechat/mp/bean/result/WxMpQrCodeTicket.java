@@ -6,43 +6,43 @@ import java.io.Serializable;
 
 /**
  * 换取二维码的Ticket
- * 
+ *
  * @author chanjarster
  */
 public class WxMpQrCodeTicket implements Serializable {
-  
-  protected String ticket;
-  protected int expire_seconds = -1;
-  protected String url;
 
-  public String getTicket() {
-    return ticket;
-  }
+    protected String ticket;
+    protected int expire_seconds = -1;
+    protected String url;
 
-  public void setTicket(String ticket) {
-    this.ticket = ticket;
-  }
+    public static WxMpQrCodeTicket fromJson(String json) {
+        return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrCodeTicket.class);
+    }
 
-  /**
-   * 如果返回-1说明是永久
-   */
-  public int getExpire_seconds() {
-    return expire_seconds;
-  }
+    public String getTicket() {
+        return ticket;
+    }
 
-  public void setExpire_seconds(int expire_seconds) {
-    this.expire_seconds = expire_seconds;
-  }
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
+    }
 
-  public String getUrl() {
-    return url;
-  }
+    /**
+     * 如果返回-1说明是永久
+     */
+    public int getExpire_seconds() {
+        return expire_seconds;
+    }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
+    public void setExpire_seconds(int expire_seconds) {
+        this.expire_seconds = expire_seconds;
+    }
 
-  public static WxMpQrCodeTicket fromJson(String json) {
-    return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrCodeTicket.class);
-  }
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

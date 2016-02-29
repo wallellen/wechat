@@ -9,24 +9,24 @@ import com.wallellen.wechat.cp.bean.WxCpMessage;
  * <pre>
  * 用法: WxCustomMessage m = WxCustomMessage.IMAGE().mediaId(...).toUser(...).build();
  * </pre>
- * @author wallellen
  *
+ * @author wallellen
  */
 public final class ImageBuilder extends BaseBuilder<ImageBuilder> {
-  private String mediaId;
+    private String mediaId;
 
-  public ImageBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_IMAGE;
-  }
+    public ImageBuilder() {
+        this.msgType = WxConsts.CUSTOM_MSG_IMAGE;
+    }
 
-  public ImageBuilder mediaId(String media_id) {
-    this.mediaId = media_id;
-    return this;
-  }
+    public ImageBuilder mediaId(String media_id) {
+        this.mediaId = media_id;
+        return this;
+    }
 
-  public WxCpMessage build() {
-    WxCpMessage m = super.build();
-    m.setMediaId(this.mediaId);
-    return m;
-  }
+    public WxCpMessage build() {
+        WxCpMessage m = super.build();
+        m.setMediaId(this.mediaId);
+        return m;
+    }
 }

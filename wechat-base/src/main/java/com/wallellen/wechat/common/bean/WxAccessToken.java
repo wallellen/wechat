@@ -6,28 +6,28 @@ import java.io.Serializable;
 
 public class WxAccessToken implements Serializable {
 
-  private String accessToken;
-  
-  private int expiresIn = -1;
+    private String accessToken;
 
-  public String getAccessToken() {
-    return accessToken;
-  }
+    private int expiresIn = -1;
 
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
-  }
+    public static WxAccessToken fromJson(String json) {
+        return WxGsonBuilder.create().fromJson(json, WxAccessToken.class);
+    }
 
-  public int getExpiresIn() {
-    return expiresIn;
-  }
+    public String getAccessToken() {
+        return accessToken;
+    }
 
-  public void setExpiresIn(int expiresIn) {
-    this.expiresIn = expiresIn;
-  }
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
-  public static WxAccessToken fromJson(String json) {
-    return WxGsonBuilder.create().fromJson(json, WxAccessToken.class);
-  }
-  
+    public int getExpiresIn() {
+        return expiresIn;
+    }
+
+    public void setExpiresIn(int expiresIn) {
+        this.expiresIn = expiresIn;
+    }
+
 }

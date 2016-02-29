@@ -8,24 +8,24 @@ import com.wallellen.wechat.cp.bean.WxCpMessage;
  * <pre>
  * 用法: WxCustomMessage m = WxCustomMessage.VOICE().mediaId(...).toUser(...).build();
  * </pre>
- * @author wallellen
  *
+ * @author wallellen
  */
 public final class VoiceBuilder extends BaseBuilder<VoiceBuilder> {
-  private String mediaId;
+    private String mediaId;
 
-  public VoiceBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_VOICE;
-  }
+    public VoiceBuilder() {
+        this.msgType = WxConsts.CUSTOM_MSG_VOICE;
+    }
 
-  public VoiceBuilder mediaId(String media_id) {
-    this.mediaId = media_id;
-    return this;
-  }
+    public VoiceBuilder mediaId(String media_id) {
+        this.mediaId = media_id;
+        return this;
+    }
 
-  public WxCpMessage build() {
-    WxCpMessage m = super.build();
-    m.setMediaId(this.mediaId);
-    return m;
-  }
+    public WxCpMessage build() {
+        WxCpMessage m = super.build();
+        m.setMediaId(this.mediaId);
+        return m;
+    }
 }

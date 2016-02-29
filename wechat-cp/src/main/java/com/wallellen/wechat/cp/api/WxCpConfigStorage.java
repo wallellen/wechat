@@ -6,61 +6,62 @@ import java.io.File;
 
 /**
  * 微信客户端配置存储
- * @author wallellen
  *
+ * @author wallellen
  */
 public interface WxCpConfigStorage {
 
-  public String getAccessToken();
+    public String getAccessToken();
 
-  public boolean isAccessTokenExpired();
+    public boolean isAccessTokenExpired();
 
-  /**
-   * 强制将access token过期掉
-   */
-  public void expireAccessToken();
+    /**
+     * 强制将access token过期掉
+     */
+    public void expireAccessToken();
 
-  public void updateAccessToken(WxAccessToken accessToken);
+    public void updateAccessToken(WxAccessToken accessToken);
 
-  public void updateAccessToken(String accessToken, int expiresIn);
+    public void updateAccessToken(String accessToken, int expiresIn);
 
-  public String getJsapiTicket();
+    public String getJsapiTicket();
 
-  public boolean isJsapiTicketExpired();
+    public boolean isJsapiTicketExpired();
 
-  /**
-   * 强制将jsapi ticket过期掉
-   */
-  public void expireJsapiTicket();
+    /**
+     * 强制将jsapi ticket过期掉
+     */
+    public void expireJsapiTicket();
 
-  /**
-   * 应该是线程安全的
-   * @param jsapiTicket
-   */
-  public void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
+    /**
+     * 应该是线程安全的
+     *
+     * @param jsapiTicket
+     */
+    public void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
 
-  public String getCorpId();
-  
-  public String getCorpSecret();
+    public String getCorpId();
 
-  public String getAgentId();
+    public String getCorpSecret();
 
-  public String getToken();
+    public String getAgentId();
 
-  public String getAesKey();
+    public String getToken();
 
-  public long getExpiresTime();
+    public String getAesKey();
 
-  public String getOauth2redirectUri();
+    public long getExpiresTime();
 
-  public String getHttp_proxy_host();
+    public String getOauth2redirectUri();
 
-  public int getHttp_proxy_port();
+    public String getHttp_proxy_host();
 
-  public String getHttp_proxy_username();
+    public int getHttp_proxy_port();
 
-  public String getHttp_proxy_password();
-  
-  public File getTmpDirFile();
+    public String getHttp_proxy_username();
+
+    public String getHttp_proxy_password();
+
+    public File getTmpDirFile();
 
 }

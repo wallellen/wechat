@@ -6,51 +6,51 @@ import java.io.Serializable;
 
 public class WxMediaUploadResult implements Serializable {
 
-  private String type;
-  private String mediaId;
-  private String thumbMediaId;
-  private long createdAt;
+    private String type;
+    private String mediaId;
+    private String thumbMediaId;
+    private long createdAt;
 
-  public String getType() {
-    return type;
-  }
+    public static WxMediaUploadResult fromJson(String json) {
+        return WxGsonBuilder.create().fromJson(json, WxMediaUploadResult.class);
+    }
 
-  public void setType(String type) {
-    this.type = type;
-  }
+    public String getType() {
+        return type;
+    }
 
-  public String getMediaId() {
-    return mediaId;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-  public void setMediaId(String mediaId) {
-    this.mediaId = mediaId;
-  }
+    public String getMediaId() {
+        return mediaId;
+    }
 
-  public long getCreatedAt() {
-    return createdAt;
-  }
+    public void setMediaId(String mediaId) {
+        this.mediaId = mediaId;
+    }
 
-  public void setCreatedAt(long createdAt) {
-    this.createdAt = createdAt;
-  }
+    public long getCreatedAt() {
+        return createdAt;
+    }
 
-  public String getThumbMediaId() {
-    return thumbMediaId;
-  }
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
 
-  public void setThumbMediaId(String thumbMediaId) {
-    this.thumbMediaId = thumbMediaId;
-  }
+    public String getThumbMediaId() {
+        return thumbMediaId;
+    }
 
-  public static WxMediaUploadResult fromJson(String json) {
-    return WxGsonBuilder.create().fromJson(json, WxMediaUploadResult.class);
-  }
+    public void setThumbMediaId(String thumbMediaId) {
+        this.thumbMediaId = thumbMediaId;
+    }
 
-  @Override
-  public String toString() {
-    return "WxUploadResult [type=" + type + ", media_id=" + mediaId + ", thumb_media_id=" + thumbMediaId
-        + ", created_at=" + createdAt + "]";
-  }
+    @Override
+    public String toString() {
+        return "WxUploadResult [type=" + type + ", media_id=" + mediaId + ", thumb_media_id=" + thumbMediaId
+                + ", created_at=" + createdAt + "]";
+    }
 
 }

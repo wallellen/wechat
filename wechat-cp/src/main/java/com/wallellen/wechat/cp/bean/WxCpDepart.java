@@ -11,58 +11,58 @@ import java.io.Serializable;
  */
 public class WxCpDepart implements Serializable {
 
-  private Integer id;
-  private String name;
-  private Integer parentId;
-  private Integer order;
+    private Integer id;
+    private String name;
+    private Integer parentId;
+    private Integer order;
 
-  public Integer getId() {
-    return id;
-  }
+    public static WxCpDepart fromJson(String json) {
+        return WxCpGsonBuilder.create().fromJson(json, WxCpDepart.class);
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public Integer getId() {
+        return id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public Integer getParentId() {
-    return parentId;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setParentId(Integer parentId) {
-    this.parentId = parentId;
-  }
+    public Integer getParentId() {
+        return parentId;
+    }
 
-  public Integer getOrder() {
-    return order;
-  }
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
 
-  public void setOrder(Integer order) {
-    this.order = order;
-  }
+    public Integer getOrder() {
+        return order;
+    }
 
-  public static WxCpDepart fromJson(String json) {
-    return WxCpGsonBuilder.create().fromJson(json, WxCpDepart.class);
-  }
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
 
-  public String toJson() {
-    return WxCpGsonBuilder.create().toJson(this);
-  }
+    public String toJson() {
+        return WxCpGsonBuilder.create().toJson(this);
+    }
 
-  @Override
-  public String toString() {
-    return "WxCpDepart{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", parentId=" + parentId +
-        ", order=" + order +
-        '}';
-  }
+    @Override
+    public String toString() {
+        return "WxCpDepart{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentId=" + parentId +
+                ", order=" + order +
+                '}';
+    }
 }

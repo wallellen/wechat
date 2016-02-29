@@ -8,7 +8,13 @@
  */
 package com.wallellen.wechat.cp.util.json;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.wallellen.wechat.common.util.json.GsonHelper;
 import com.wallellen.wechat.cp.bean.WxCpTag;
 
@@ -19,17 +25,17 @@ import java.lang.reflect.Type;
  */
 public class WxCpTagGsonAdapter implements JsonSerializer<WxCpTag>, JsonDeserializer<WxCpTag> {
 
-  public JsonElement serialize(WxCpTag tag, Type typeOfSrc, JsonSerializationContext context) {
-    JsonObject o = new JsonObject();
-    o.addProperty("tagid", tag.getId());
-    o.addProperty("tagname", tag.getName());
-    return o;
-  }
+    public JsonElement serialize(WxCpTag tag, Type typeOfSrc, JsonSerializationContext context) {
+        JsonObject o = new JsonObject();
+        o.addProperty("tagid", tag.getId());
+        o.addProperty("tagname", tag.getName());
+        return o;
+    }
 
-  public WxCpTag deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-      throws JsonParseException {
-    JsonObject jsonObject = json.getAsJsonObject();
-    return new WxCpTag(GsonHelper.getString(jsonObject, "tagid"), GsonHelper.getString(jsonObject, "tagname"));
-  }
+    public WxCpTag deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+            throws JsonParseException {
+        JsonObject jsonObject = json.getAsJsonObject();
+        return new WxCpTag(GsonHelper.getString(jsonObject, "tagid"), GsonHelper.getString(jsonObject, "tagname"));
+    }
 
 }

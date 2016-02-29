@@ -7,6 +7,6 @@ import com.wallellen.wechat.common.exception.WxErrorException;
  */
 public interface WxErrorExceptionHandler {
 
-  public void handle(WxErrorException e);
+    public void handle(WxErrorException e);
 
 }

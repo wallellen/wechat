@@ -9,42 +9,42 @@ import java.io.Serializable;
  */
 public class WxCpTag implements Serializable {
 
-  private String id;
+    private String id;
 
-  private String name;
+    private String name;
 
-  public WxCpTag() {
-    super();
-  }
+    public WxCpTag() {
+        super();
+    }
 
-  public WxCpTag(String id, String name) {
-    super();
-    this.id = id;
-    this.name = name;
-  }
+    public WxCpTag(String id, String name) {
+        super();
+        this.id = id;
+        this.name = name;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public static WxCpTag fromJson(String json) {
+        return WxCpGsonBuilder.create().fromJson(json, WxCpTag.class);
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getId() {
-    return id;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public static WxCpTag fromJson(String json) {
-    return WxCpGsonBuilder.create().fromJson(json, WxCpTag.class);
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public String toJson() {
-    return WxCpGsonBuilder.create().toJson(this);
-  }
+    public String toJson() {
+        return WxCpGsonBuilder.create().toJson(this);
+    }
 
 }

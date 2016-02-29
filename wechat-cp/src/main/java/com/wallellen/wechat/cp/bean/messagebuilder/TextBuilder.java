@@ -8,24 +8,24 @@ import com.wallellen.wechat.cp.bean.WxCpMessage;
  * <pre>
  * 用法: WxCustomMessage m = WxCustomMessage.TEXT().content(...).toUser(...).build();
  * </pre>
- * @author wallellen
  *
+ * @author wallellen
  */
 public final class TextBuilder extends BaseBuilder<TextBuilder> {
-  private String content;
+    private String content;
 
-  public TextBuilder() {
-    this.msgType = WxConsts.CUSTOM_MSG_TEXT;
-  }
+    public TextBuilder() {
+        this.msgType = WxConsts.CUSTOM_MSG_TEXT;
+    }
 
-  public TextBuilder content(String content) {
-    this.content = content;
-    return this;
-  }
+    public TextBuilder content(String content) {
+        this.content = content;
+        return this;
+    }
 
-  public WxCpMessage build() {
-    WxCpMessage m = super.build();
-    m.setContent(this.content);
-    return m;
-  }
+    public WxCpMessage build() {
+        WxCpMessage m = super.build();
+        m.setContent(this.content);
+        return m;
+    }
 }

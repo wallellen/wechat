@@ -6,41 +6,41 @@ import java.io.Serializable;
 
 public class WxMpMaterialVideoInfoResult implements Serializable {
 
-  private String title;
-  private String description;
-  private String downUrl;
+    private String title;
+    private String description;
+    private String downUrl;
 
-  public String getTitle() {
-    return title;
-  }
+    public static WxMpMaterialVideoInfoResult fromJson(String json) {
+        return WxMpGsonBuilder.create().fromJson(json, WxMpMaterialVideoInfoResult.class);
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public String getDownUrl() {
-    return downUrl;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setDownUrl(String downUrl) {
-    this.downUrl = downUrl;
-  }
+    public String getDownUrl() {
+        return downUrl;
+    }
 
-  public static WxMpMaterialVideoInfoResult fromJson(String json) {
-    return WxMpGsonBuilder.create().fromJson(json, WxMpMaterialVideoInfoResult.class);
-  }
+    public void setDownUrl(String downUrl) {
+        this.downUrl = downUrl;
+    }
 
-  @Override
-  public String toString() {
-    return "WxMpMaterialVideoInfoResult [title=" + title + ", description=" + description + ", downUrl=" + downUrl + "]";
-  }
+    @Override
+    public String toString() {
+        return "WxMpMaterialVideoInfoResult [title=" + title + ", description=" + description + ", downUrl=" + downUrl + "]";
+    }
 
 }

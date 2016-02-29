@@ -1,7 +1,7 @@
 package com.wallellen.wechat.mp.util.http;
 
 import com.wallellen.wechat.common.bean.result.WxError;
-import  com.wallellen.wechat.common.exception.WxErrorException;
+import com.wallellen.wechat.common.exception.WxErrorException;
 import com.wallellen.wechat.common.util.http.RequestExecutor;
 import com.wallellen.wechat.common.util.http.Utf8ResponseHandler;
 import com.wallellen.wechat.common.util.json.WxGsonBuilder;
@@ -20,28 +20,28 @@ import java.util.Map;
 
 public class MaterialVideoInfoRequestExecutor implements RequestExecutor<WxMpMaterialVideoInfoResult, String> {
 
-  public MaterialVideoInfoRequestExecutor() {
-    super();
-  }
-
-  public WxMpMaterialVideoInfoResult execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, ClientProtocolException, IOException {
-    HttpPost httpPost = new HttpPost(uri);
-    if (httpProxy != null) {
-      RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
-      httpPost.setConfig(config);
+    public MaterialVideoInfoRequestExecutor() {
+        super();
     }
 
-    Map<String, String> params = new HashMap<>();
-    params.put("media_id", materialId);
-    httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
-    CloseableHttpResponse response = httpclient.execute(httpPost);
-    String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-    WxError error = WxError.fromJson(responseContent);
-    if (error.getErrorCode() != 0) {
-      throw new WxErrorException(error);
-    } else {
-      return WxMpMaterialVideoInfoResult.fromJson(responseContent);
+    public WxMpMaterialVideoInfoResult execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, String materialId) throws WxErrorException, ClientProtocolException, IOException {
+        HttpPost httpPost = new HttpPost(uri);
+        if (httpProxy != null) {
+            RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
+            httpPost.setConfig(config);
+        }
+
+        Map<String, String> params = new HashMap<>();
+        params.put("media_id", materialId);
+        httpPost.setEntity(new StringEntity(WxGsonBuilder.create().toJson(params)));
+        CloseableHttpResponse response = httpclient.execute(httpPost);
+        String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
+        WxError error = WxError.fromJson(responseContent);
+        if (error.getErrorCode() != 0) {
+            throw new WxErrorException(error);
+        } else {
+            return WxMpMaterialVideoInfoResult.fromJson(responseContent);
+        }
     }
-  }
 
 }

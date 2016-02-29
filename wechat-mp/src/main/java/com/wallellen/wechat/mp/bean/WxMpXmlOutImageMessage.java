@@ -8,20 +8,20 @@ import com.wallellen.wechat.common.util.xml.XStreamMediaIdConverter;
 @XStreamAlias("xml")
 public class WxMpXmlOutImageMessage extends WxMpXmlOutMessage {
 
-  @XStreamAlias("Image")
-  @XStreamConverter(value = XStreamMediaIdConverter.class)
-  private String mediaId;
+    @XStreamAlias("Image")
+    @XStreamConverter(value = XStreamMediaIdConverter.class)
+    private String mediaId;
 
-  public String getMediaId() {
-    return mediaId;
-  }
+    public WxMpXmlOutImageMessage() {
+        this.msgType = WxConsts.XML_MSG_IMAGE;
+    }
 
-  public void setMediaId(String mediaId) {
-    this.mediaId = mediaId;
-  }
+    public String getMediaId() {
+        return mediaId;
+    }
 
-  public WxMpXmlOutImageMessage() {
-    this.msgType = WxConsts.XML_MSG_IMAGE;
-  }
+    public void setMediaId(String mediaId) {
+        this.mediaId = mediaId;
+    }
 
 }

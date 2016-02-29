@@ -18,26 +18,6 @@ public class WxMenu implements Serializable {
 
     private WxMenuRule matchRule;
 
-    public List<WxMenuButton> getButtons() {
-        return buttons;
-    }
-
-    public void setButtons(List<WxMenuButton> buttons) {
-        this.buttons = buttons;
-    }
-
-    public WxMenuRule getMatchRule() {
-        return matchRule;
-    }
-
-    public void setMatchRule(WxMenuRule matchRule) {
-        this.matchRule = matchRule;
-    }
-
-    public String toJson() {
-        return WxGsonBuilder.create().toJson(this);
-    }
-
     /**
      * 要用 http://mp.weixin.qq.com/wiki/16/ff9b7b85220e1396ffa16794a9d95adc.html 格式来反序列化
      * 相比 http://mp.weixin.qq.com/wiki/13/43de8269be54a0a6f64413e4dfa94f39.html 的格式，外层多套了一个menu
@@ -58,6 +38,26 @@ public class WxMenu implements Serializable {
      */
     public static WxMenu fromJson(InputStream is) {
         return WxGsonBuilder.create().fromJson(new InputStreamReader(is, Charsets.UTF_8), WxMenu.class);
+    }
+
+    public List<WxMenuButton> getButtons() {
+        return buttons;
+    }
+
+    public void setButtons(List<WxMenuButton> buttons) {
+        this.buttons = buttons;
+    }
+
+    public WxMenuRule getMatchRule() {
+        return matchRule;
+    }
+
+    public void setMatchRule(WxMenuRule matchRule) {
+        this.matchRule = matchRule;
+    }
+
+    public String toJson() {
+        return WxGsonBuilder.create().toJson(this);
     }
 
     @Override

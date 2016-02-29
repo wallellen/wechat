@@ -1,13 +1,13 @@
 package com.wallellen.wechat.cp.api;
 
+import com.wallellen.wechat.common.api.WxErrorExceptionHandler;
+import com.wallellen.wechat.common.api.WxMessageDuplicateChecker;
+import com.wallellen.wechat.common.api.WxMessageInMemoryDuplicateChecker;
 import com.wallellen.wechat.common.session.InternalSession;
 import com.wallellen.wechat.common.session.InternalSessionManager;
 import com.wallellen.wechat.common.session.StandardSessionManager;
 import com.wallellen.wechat.common.session.WxSessionManager;
 import com.wallellen.wechat.common.util.LogExceptionHandler;
-import com.wallellen.wechat.common.api.WxErrorExceptionHandler;
-import com.wallellen.wechat.common.api.WxMessageDuplicateChecker;
-import com.wallellen.wechat.common.api.WxMessageInMemoryDuplicateChecker;
 import com.wallellen.wechat.cp.bean.WxCpXmlMessage;
 import com.wallellen.wechat.cp.bean.WxCpXmlOutMessage;
 import org.slf4j.Logger;
@@ -45,191 +45,196 @@ import java.util.concurrent.Future;
  * router.route(message);
  *
  * </pre>
- * @author wallellen
  *
+ * @author wallellen
  */
 public class WxCpMessageRouter {
 
-  protected final Logger log = LoggerFactory.getLogger(WxCpMessageRouter.class);
+    private static final int DEFAULT_THREAD_POOL_SIZE = 100;
+    protected final Logger log = LoggerFactory.getLogger(WxCpMessageRouter.class);
+    private final List<WxCpMessageRouterRule> rules = new ArrayList<WxCpMessageRouterRule>();
 
-  private static final int DEFAULT_THREAD_POOL_SIZE = 100;
+    private final WxCpService wxCpService;
 
-  private final List<WxCpMessageRouterRule> rules = new ArrayList<WxCpMessageRouterRule>();
+    private ExecutorService executorService;
 
-  private final WxCpService wxCpService;
+    private WxMessageDuplicateChecker messageDuplicateChecker;
 
-  private ExecutorService executorService;
+    private WxSessionManager sessionManager;
 
-  private WxMessageDuplicateChecker messageDuplicateChecker;
+    private WxErrorExceptionHandler exceptionHandler;
 
-  private WxSessionManager sessionManager;
-
-  private WxErrorExceptionHandler exceptionHandler;
-
-  public WxCpMessageRouter(WxCpService wxCpService) {
-    this.wxCpService = wxCpService;
-    this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
-    this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
-    this.sessionManager = new StandardSessionManager();
-    this.exceptionHandler = new LogExceptionHandler();
-  }
-
-  /**
-   * <pre>
-   * 设置自定义的 {@link ExecutorService}
-   * 如果不调用该方法，默认使用 Executors.newFixedThreadPool(100)
-   * </pre>
-   * @param executorService
-   */
-  public void setExecutorService(ExecutorService executorService) {
-    this.executorService = executorService;
-  }
-
-  /**
-   * <pre>
-   * 设置自定义的 {@link com.wallellen.wechat.common.api.WxMessageDuplicateChecker}
-   * 如果不调用该方法，默认使用 {@link com.wallellen.wechat.common.api.WxMessageInMemoryDuplicateChecker}
-   * </pre>
-   * @param messageDuplicateChecker
-   */
-  public void setMessageDuplicateChecker(WxMessageDuplicateChecker messageDuplicateChecker) {
-    this.messageDuplicateChecker = messageDuplicateChecker;
-  }
-
-  /**
-   * <pre>
-   * 设置自定义的{@link com.wallellen.wechat.common.session.WxSessionManager}
-   * 如果不调用该方法，默认使用 {@link com.wallellen.wechat.common.session.StandardSessionManager}
-   * </pre>
-   * @param sessionManager
-   */
-  public void setSessionManager(WxSessionManager sessionManager) {
-    this.sessionManager = sessionManager;
-  }
-
-  /**
-   * <pre>
-   * 设置自定义的{@link com.wallellen.wechat.common.api.WxErrorExceptionHandler}
-   * 如果不调用该方法，默认使用 {@link com.wallellen.wechat.common.util.LogExceptionHandler}
-   * </pre>
-   * @param exceptionHandler
-   */
-  public void setExceptionHandler(WxErrorExceptionHandler exceptionHandler) {
-    this.exceptionHandler = exceptionHandler;
-  }
-
-  List<WxCpMessageRouterRule> getRules() {
-    return this.rules;
-  }
-
-  /**
-   * 开始一个新的Route规则
-   * @return
-   */
-  public WxCpMessageRouterRule rule() {
-    return new WxCpMessageRouterRule(this);
-  }
-
-  /**
-   * 处理微信消息
-   * @param wxMessage
-   */
-  public WxCpXmlOutMessage route(final WxCpXmlMessage wxMessage) {
-    if (isDuplicateMessage(wxMessage)) {
-      // 如果是重复消息，那么就不做处理
-      return null;
+    public WxCpMessageRouter(WxCpService wxCpService) {
+        this.wxCpService = wxCpService;
+        this.executorService = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
+        this.messageDuplicateChecker = new WxMessageInMemoryDuplicateChecker();
+        this.sessionManager = new StandardSessionManager();
+        this.exceptionHandler = new LogExceptionHandler();
     }
 
-    final List<WxCpMessageRouterRule> matchRules = new ArrayList<WxCpMessageRouterRule>();
-    // 收集匹配的规则
-    for (final WxCpMessageRouterRule rule : rules) {
-      if (rule.test(wxMessage)) {
-        matchRules.add(rule);
-        if(!rule.isReEnter()) {
-          break;
+    /**
+     * <pre>
+     * 设置自定义的 {@link ExecutorService}
+     * 如果不调用该方法，默认使用 Executors.newFixedThreadPool(100)
+     * </pre>
+     *
+     * @param executorService
+     */
+    public void setExecutorService(ExecutorService executorService) {
+        this.executorService = executorService;
+    }
+
+    /**
+     * <pre>
+     * 设置自定义的 {@link com.wallellen.wechat.common.api.WxMessageDuplicateChecker}
+     * 如果不调用该方法，默认使用 {@link com.wallellen.wechat.common.api.WxMessageInMemoryDuplicateChecker}
+     * </pre>
+     *
+     * @param messageDuplicateChecker
+     */
+    public void setMessageDuplicateChecker(WxMessageDuplicateChecker messageDuplicateChecker) {
+        this.messageDuplicateChecker = messageDuplicateChecker;
+    }
+
+    /**
+     * <pre>
+     * 设置自定义的{@link com.wallellen.wechat.common.session.WxSessionManager}
+     * 如果不调用该方法，默认使用 {@link com.wallellen.wechat.common.session.StandardSessionManager}
+     * </pre>
+     *
+     * @param sessionManager
+     */
+    public void setSessionManager(WxSessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
+
+    /**
+     * <pre>
+     * 设置自定义的{@link com.wallellen.wechat.common.api.WxErrorExceptionHandler}
+     * 如果不调用该方法，默认使用 {@link com.wallellen.wechat.common.util.LogExceptionHandler}
+     * </pre>
+     *
+     * @param exceptionHandler
+     */
+    public void setExceptionHandler(WxErrorExceptionHandler exceptionHandler) {
+        this.exceptionHandler = exceptionHandler;
+    }
+
+    List<WxCpMessageRouterRule> getRules() {
+        return this.rules;
+    }
+
+    /**
+     * 开始一个新的Route规则
+     *
+     * @return
+     */
+    public WxCpMessageRouterRule rule() {
+        return new WxCpMessageRouterRule(this);
+    }
+
+    /**
+     * 处理微信消息
+     *
+     * @param wxMessage
+     */
+    public WxCpXmlOutMessage route(final WxCpXmlMessage wxMessage) {
+        if (isDuplicateMessage(wxMessage)) {
+            // 如果是重复消息，那么就不做处理
+            return null;
         }
-      }
-    }
 
-    if (matchRules.size() == 0) {
-      return null;
-    }
-
-    WxCpXmlOutMessage res = null;
-    final List<Future> futures = new ArrayList<Future>();
-    for (final WxCpMessageRouterRule rule : matchRules) {
-      // 返回最后一个非异步的rule的执行结果
-      if(rule.isAsync()) {
-        futures.add(
-            executorService.submit(new Runnable() {
-              public void run() {
-                rule.service(wxMessage, wxCpService, sessionManager, exceptionHandler);
-              }
-            })
-        );
-      } else {
-        res = rule.service(wxMessage, wxCpService, sessionManager, exceptionHandler);
-        // 在同步操作结束，session访问结束
-        log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUserName());
-        sessionEndAccess(wxMessage);
-      }
-    }
-
-    if (futures.size() > 0) {
-      executorService.submit(new Runnable() {
-        @Override
-        public void run() {
-          for (Future future : futures) {
-            try {
-              future.get();
-              log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUserName());
-              // 异步操作结束，session访问结束
-              sessionEndAccess(wxMessage);
-            } catch (InterruptedException e) {
-              log.error("Error happened when wait task finish", e);
-            } catch (ExecutionException e) {
-              log.error("Error happened when wait task finish", e);
+        final List<WxCpMessageRouterRule> matchRules = new ArrayList<WxCpMessageRouterRule>();
+        // 收集匹配的规则
+        for (final WxCpMessageRouterRule rule : rules) {
+            if (rule.test(wxMessage)) {
+                matchRules.add(rule);
+                if (!rule.isReEnter()) {
+                    break;
+                }
             }
-          }
         }
-      });
+
+        if (matchRules.size() == 0) {
+            return null;
+        }
+
+        WxCpXmlOutMessage res = null;
+        final List<Future> futures = new ArrayList<Future>();
+        for (final WxCpMessageRouterRule rule : matchRules) {
+            // 返回最后一个非异步的rule的执行结果
+            if (rule.isAsync()) {
+                futures.add(
+                        executorService.submit(new Runnable() {
+                            public void run() {
+                                rule.service(wxMessage, wxCpService, sessionManager, exceptionHandler);
+                            }
+                        })
+                );
+            } else {
+                res = rule.service(wxMessage, wxCpService, sessionManager, exceptionHandler);
+                // 在同步操作结束，session访问结束
+                log.debug("End session access: async=false, sessionId={}", wxMessage.getFromUserName());
+                sessionEndAccess(wxMessage);
+            }
+        }
+
+        if (futures.size() > 0) {
+            executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    for (Future future : futures) {
+                        try {
+                            future.get();
+                            log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUserName());
+                            // 异步操作结束，session访问结束
+                            sessionEndAccess(wxMessage);
+                        } catch (InterruptedException e) {
+                            log.error("Error happened when wait task finish", e);
+                        } catch (ExecutionException e) {
+                            log.error("Error happened when wait task finish", e);
+                        }
+                    }
+                }
+            });
+        }
+        return res;
     }
-    return res;
-  }
 
-  protected boolean isDuplicateMessage(WxCpXmlMessage wxMessage) {
+    protected boolean isDuplicateMessage(WxCpXmlMessage wxMessage) {
 
-    String messageId = "";
-    if (wxMessage.getMsgId() == null) {
-      messageId = String.valueOf(wxMessage.getCreateTime())
-          + "-" +String.valueOf(wxMessage.getAgentId() == null ? "" : wxMessage.getAgentId())
-          + "-" + wxMessage.getFromUserName()
-          + "-" + String.valueOf(wxMessage.getEventKey() == null ? "" : wxMessage.getEventKey())
-          + "-" + String.valueOf(wxMessage.getEvent() == null ? "" : wxMessage.getEvent())
-      ;
-    } else {
-      messageId = String.valueOf(wxMessage.getMsgId());
+        String messageId = "";
+        if (wxMessage.getMsgId() == null) {
+            messageId = String.valueOf(wxMessage.getCreateTime())
+                    + "-" + String.valueOf(wxMessage.getAgentId() == null ? "" : wxMessage.getAgentId())
+                    + "-" + wxMessage.getFromUserName()
+                    + "-" + String.valueOf(wxMessage.getEventKey() == null ? "" : wxMessage.getEventKey())
+                    + "-" + String.valueOf(wxMessage.getEvent() == null ? "" : wxMessage.getEvent())
+            ;
+        } else {
+            messageId = String.valueOf(wxMessage.getMsgId());
+        }
+
+        if (messageDuplicateChecker.isDuplicate(messageId)) {
+            return true;
+        }
+        return false;
+
     }
 
-    if (messageDuplicateChecker.isDuplicate(messageId)) {
-      return true;
+    /**
+     * 对session的访问结束
+     *
+     * @param wxMessage
+     */
+    protected void sessionEndAccess(WxCpXmlMessage wxMessage) {
+
+        InternalSession session = ((InternalSessionManager) sessionManager).findSession(wxMessage.getFromUserName());
+        if (session != null) {
+            session.endAccess();
+        }
+
     }
-    return false;
-
-  }
-
-  /**
-   * 对session的访问结束
-   * @param wxMessage
-   */
-  protected void sessionEndAccess(WxCpXmlMessage wxMessage) {
-
-    InternalSession session = ((InternalSessionManager)sessionManager).findSession(wxMessage.getFromUserName());
-    if (session != null) {
-      session.endAccess();
-    }
-
-  }
 
 
 }

@@ -6,54 +6,54 @@ import java.io.Serializable;
  * jspai signature
  */
 public class WxJsapiSignature implements Serializable {
-  private String appid;
-  
-  private String noncestr;
+    private String appid;
 
-  private long timestamp;
+    private String noncestr;
 
-  private String url;
+    private long timestamp;
 
-  private String signature;
+    private String url;
 
-  public String getSignature() {
-    return signature;
-  }
+    private String signature;
 
-  public void setSignature(String signature) {
-    this.signature = signature;
-  }
+    public String getSignature() {
+        return signature;
+    }
 
-  public String getNoncestr() {
-    return noncestr;
-  }
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
-  public void setNoncestr(String noncestr) {
-    this.noncestr = noncestr;
-  }
+    public String getNoncestr() {
+        return noncestr;
+    }
 
-  public long getTimestamp() {
-    return timestamp;
-  }
+    public void setNoncestr(String noncestr) {
+        this.noncestr = noncestr;
+    }
 
-  public void setTimestamp(long timestamp) {
-    this.timestamp = timestamp;
-  }
+    public long getTimestamp() {
+        return timestamp;
+    }
 
-  public String getUrl() {
-    return url;
-  }
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
+    public String getUrl() {
+        return url;
+    }
 
-  public String getAppid() {
-	  return appid;
-  }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-  public void setAppid(String appid) {
-	  this.appid = appid;
-  }
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
+    }
 
 }

@@ -17,18 +17,16 @@ import com.wallellen.wechat.mp.bean.WxMpMassVideo;
 import java.lang.reflect.Type;
 
 /**
- * 
  * @author wallellen
- *
  */
 public class WxMpMassVideoAdapter implements JsonSerializer<WxMpMassVideo> {
 
-  public JsonElement serialize(WxMpMassVideo message, Type typeOfSrc, JsonSerializationContext context) {
-    JsonObject messageJson = new JsonObject();
-    messageJson.addProperty("media_id", message.getMediaId());
-    messageJson.addProperty("description", message.getDescription());
-    messageJson.addProperty("title", message.getTitle());
-    return messageJson;
-  }
+    public JsonElement serialize(WxMpMassVideo message, Type typeOfSrc, JsonSerializationContext context) {
+        JsonObject messageJson = new JsonObject();
+        messageJson.addProperty("media_id", message.getMediaId());
+        messageJson.addProperty("description", message.getDescription());
+        messageJson.addProperty("title", message.getTitle());
+        return messageJson;
+    }
 
 }

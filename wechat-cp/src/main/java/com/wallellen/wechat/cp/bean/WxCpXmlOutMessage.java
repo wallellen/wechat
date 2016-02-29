@@ -30,6 +30,51 @@ public abstract class WxCpXmlOutMessage {
     @XStreamConverter(value = XStreamCDataConverter.class)
     protected String msgType;
 
+    /**
+     * 获得文本消息builder
+     *
+     * @return
+     */
+    public static TextBuilder TEXT() {
+        return new TextBuilder();
+    }
+
+    /**
+     * 获得图片消息builder
+     *
+     * @return
+     */
+    public static ImageBuilder IMAGE() {
+        return new ImageBuilder();
+    }
+
+    /**
+     * 获得语音消息builder
+     *
+     * @return
+     */
+    public static VoiceBuilder VOICE() {
+        return new VoiceBuilder();
+    }
+
+    /**
+     * 获得视频消息builder
+     *
+     * @return
+     */
+    public static VideoBuilder VIDEO() {
+        return new VideoBuilder();
+    }
+
+    /**
+     * 获得图文消息builder
+     *
+     * @return
+     */
+    public static NewsBuilder NEWS() {
+        return new NewsBuilder();
+    }
+
     public String getToUserName() {
         return toUserName;
     }
@@ -75,50 +120,5 @@ public abstract class WxCpXmlOutMessage {
         String plainXml = toXml();
         WxCpCryptUtil pc = new WxCpCryptUtil(wxCpConfigStorage);
         return pc.encrypt(plainXml);
-    }
-
-    /**
-     * 获得文本消息builder
-     *
-     * @return
-     */
-    public static TextBuilder TEXT() {
-        return new TextBuilder();
-    }
-
-    /**
-     * 获得图片消息builder
-     *
-     * @return
-     */
-    public static ImageBuilder IMAGE() {
-        return new ImageBuilder();
-    }
-
-    /**
-     * 获得语音消息builder
-     *
-     * @return
-     */
-    public static VoiceBuilder VOICE() {
-        return new VoiceBuilder();
-    }
-
-    /**
-     * 获得视频消息builder
-     *
-     * @return
-     */
-    public static VideoBuilder VIDEO() {
-        return new VideoBuilder();
-    }
-
-    /**
-     * 获得图文消息builder
-     *
-     * @return
-     */
-    public static NewsBuilder NEWS() {
-        return new NewsBuilder();
     }
 }

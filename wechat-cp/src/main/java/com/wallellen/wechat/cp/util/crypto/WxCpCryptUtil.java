@@ -19,25 +19,25 @@ import org.apache.commons.codec.binary.Base64;
 
 public class WxCpCryptUtil extends WxCryptUtil {
 
-  /**
-   * 构造函数
-   *
-   * @param wxCpConfigStorage
-   */
-  public WxCpCryptUtil(WxCpConfigStorage wxCpConfigStorage) {
+    /**
+     * 构造函数
+     *
+     * @param wxCpConfigStorage
+     */
+    public WxCpCryptUtil(WxCpConfigStorage wxCpConfigStorage) {
     /*
      * @param token          公众平台上，开发者设置的token
      * @param encodingAesKey 公众平台上，开发者设置的EncodingAESKey
      * @param appidOrCorpid          公众平台appid
      */
-    String encodingAesKey = wxCpConfigStorage.getAesKey();
-    String token = wxCpConfigStorage.getToken();
-    String corpId = wxCpConfigStorage.getCorpId();
+        String encodingAesKey = wxCpConfigStorage.getAesKey();
+        String token = wxCpConfigStorage.getToken();
+        String corpId = wxCpConfigStorage.getCorpId();
 
-    this.token = token;
-    this.appidOrCorpid = corpId;
-    this.aesKey = Base64.decodeBase64(encodingAesKey + "=");
-  }
+        this.token = token;
+        this.appidOrCorpid = corpId;
+        this.aesKey = Base64.decodeBase64(encodingAesKey + "=");
+    }
 
 
 }

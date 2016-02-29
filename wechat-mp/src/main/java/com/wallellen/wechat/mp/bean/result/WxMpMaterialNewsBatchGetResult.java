@@ -8,71 +8,71 @@ import java.util.List;
 
 public class WxMpMaterialNewsBatchGetResult implements Serializable {
 
-  private int totalCount;
-  private int itemCount;
-  private List<WxMaterialNewsBatchGetNewsItem> items;
+    private int totalCount;
+    private int itemCount;
+    private List<WxMaterialNewsBatchGetNewsItem> items;
 
-  public int getTotalCount() {
-    return totalCount;
-  }
-
-  public void setTotalCount(int totalCount) {
-    this.totalCount = totalCount;
-  }
-
-  public int getItemCount() {
-    return itemCount;
-  }
-
-  public void setItemCount(int itemCount) {
-    this.itemCount = itemCount;
-  }
-
-  public List<WxMaterialNewsBatchGetNewsItem> getItems() {
-    return items;
-  }
-
-  public void setItems(List<WxMaterialNewsBatchGetNewsItem> items) {
-    this.items = items;
-  }
-
-  @Override
-  public String toString() {
-    return "WxMpMaterialNewsBatchGetResult [" + "totalCount=" + totalCount + ", itemCount=" + itemCount + ", items=" + items + "]";
-  }
-
-  public static class WxMaterialNewsBatchGetNewsItem {
-    private String mediaId;
-    private Date updateTime;
-    private WxMpMaterialNews content;
-
-    public String getMediaId() {
-      return mediaId;
+    public int getTotalCount() {
+        return totalCount;
     }
 
-    public void setMediaId(String mediaId) {
-      this.mediaId = mediaId;
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
     }
 
-    public Date getUpdateTime() {
-      return updateTime;
+    public int getItemCount() {
+        return itemCount;
     }
 
-    public void setUpdateTime(Date updateTime) {
-      this.updateTime = updateTime;
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
     }
 
-    public WxMpMaterialNews getContent() {
-      return content;
+    public List<WxMaterialNewsBatchGetNewsItem> getItems() {
+        return items;
     }
 
-    public void setContent(WxMpMaterialNews content) {
-      this.content = content;
+    public void setItems(List<WxMaterialNewsBatchGetNewsItem> items) {
+        this.items = items;
     }
 
     @Override
     public String toString() {
-      return "WxMaterialNewsBatchGetNewsItem [" + "mediaId=" + mediaId + ", updateTime=" + updateTime + ", content=" + content + "]";
+        return "WxMpMaterialNewsBatchGetResult [" + "totalCount=" + totalCount + ", itemCount=" + itemCount + ", items=" + items + "]";
     }
-  }
+
+    public static class WxMaterialNewsBatchGetNewsItem {
+        private String mediaId;
+        private Date updateTime;
+        private WxMpMaterialNews content;
+
+        public String getMediaId() {
+            return mediaId;
+        }
+
+        public void setMediaId(String mediaId) {
+            this.mediaId = mediaId;
+        }
+
+        public Date getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(Date updateTime) {
+            this.updateTime = updateTime;
+        }
+
+        public WxMpMaterialNews getContent() {
+            return content;
+        }
+
+        public void setContent(WxMpMaterialNews content) {
+            this.content = content;
+        }
+
+        @Override
+        public String toString() {
+            return "WxMaterialNewsBatchGetNewsItem [" + "mediaId=" + mediaId + ", updateTime=" + updateTime + ", content=" + content + "]";
+        }
+    }
 }

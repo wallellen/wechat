@@ -11,53 +11,53 @@ import java.util.Date;
  */
 public class WxMpUserSummary implements Serializable {
 
-  private Date refDate;
+    private Date refDate;
 
-  private Integer userSource;
+    private Integer userSource;
 
-  private Integer newUser;
+    private Integer newUser;
 
-  private Integer cancelUser;
+    private Integer cancelUser;
 
-  public Date getRefDate() {
-    return refDate;
-  }
+    public Date getRefDate() {
+        return refDate;
+    }
 
-  public void setRefDate(Date refDate) {
-    this.refDate = refDate;
-  }
+    public void setRefDate(Date refDate) {
+        this.refDate = refDate;
+    }
 
-  public Integer getUserSource() {
-    return userSource;
-  }
+    public Integer getUserSource() {
+        return userSource;
+    }
 
-  public void setUserSource(Integer userSource) {
-    this.userSource = userSource;
-  }
+    public void setUserSource(Integer userSource) {
+        this.userSource = userSource;
+    }
 
-  public Integer getNewUser() {
-    return newUser;
-  }
+    public Integer getNewUser() {
+        return newUser;
+    }
 
-  public void setNewUser(Integer newUser) {
-    this.newUser = newUser;
-  }
+    public void setNewUser(Integer newUser) {
+        this.newUser = newUser;
+    }
 
-  public Integer getCancelUser() {
-    return cancelUser;
-  }
+    public Integer getCancelUser() {
+        return cancelUser;
+    }
 
-  public void setCancelUser(Integer cancelUser) {
-    this.cancelUser = cancelUser;
-  }
+    public void setCancelUser(Integer cancelUser) {
+        this.cancelUser = cancelUser;
+    }
 
-  @Override
-  public String toString() {
-    return "WxMpUserSummary{" +
-        "refDate=" + refDate +
-        ", userSource=" + userSource +
-        ", newUser=" + newUser +
-        ", cancelUser=" + cancelUser +
-        '}';
-  }
+    @Override
+    public String toString() {
+        return "WxMpUserSummary{" +
+                "refDate=" + refDate +
+                ", userSource=" + userSource +
+                ", newUser=" + newUser +
+                ", cancelUser=" + cancelUser +
+                '}';
+    }
 }

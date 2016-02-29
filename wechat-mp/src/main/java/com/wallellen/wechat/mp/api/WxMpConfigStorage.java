@@ -1,80 +1,82 @@
 package com.wallellen.wechat.mp.api;
 
-import java.io.File;
+import com.wallellen.wechat.common.bean.WxAccessToken;
 
 import javax.net.ssl.SSLContext;
-
-import com.wallellen.wechat.common.bean.WxAccessToken;
+import java.io.File;
 
 /**
  * 微信客户端配置存储
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public interface WxMpConfigStorage {
 
-  public String getAccessToken();
+    public String getAccessToken();
 
-  public boolean isAccessTokenExpired();
+    public boolean isAccessTokenExpired();
 
-  /**
-   * 强制将access token过期掉
-   */
-  public void expireAccessToken();
+    /**
+     * 强制将access token过期掉
+     */
+    public void expireAccessToken();
 
-  /**
-   * 应该是线程安全的
-   * @param accessToken
-   */
-  public void updateAccessToken(WxAccessToken accessToken);
+    /**
+     * 应该是线程安全的
+     *
+     * @param accessToken
+     */
+    public void updateAccessToken(WxAccessToken accessToken);
 
-  /**
-   * 应该是线程安全的
-   * @param accessToken
-   * @param expiresIn
-   */
-  public void updateAccessToken(String accessToken, int expiresIn);
+    /**
+     * 应该是线程安全的
+     *
+     * @param accessToken
+     * @param expiresIn
+     */
+    public void updateAccessToken(String accessToken, int expiresIn);
 
-  public String getJsapiTicket();
+    public String getJsapiTicket();
 
-  public boolean isJsapiTicketExpired();
+    public boolean isJsapiTicketExpired();
 
-  /**
-   * 强制将jsapi ticket过期掉
-   */
-  public void expireJsapiTicket();
+    /**
+     * 强制将jsapi ticket过期掉
+     */
+    public void expireJsapiTicket();
 
-  /**
-   * 应该是线程安全的
-   * @param jsapiTicket
-   */
-  public void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
+    /**
+     * 应该是线程安全的
+     *
+     * @param jsapiTicket
+     */
+    public void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
 
-  public String getAppId();
+    public String getAppId();
 
-  public String getSecret();
+    public String getSecret();
 
     public String getPartnerId();
 
     public String getPartnerKey();
 
-  public String getToken();
+    public String getToken();
 
-  public String getAesKey();
+    public String getAesKey();
 
-  public long getExpiresTime();
+    public long getExpiresTime();
 
-  public String getOauth2redirectUri();
+    public String getOauth2redirectUri();
 
-  public String getHttp_proxy_host();
+    public String getHttp_proxy_host();
 
-  public int getHttp_proxy_port();
+    public int getHttp_proxy_port();
 
-  public String getHttp_proxy_username();
+    public String getHttp_proxy_username();
 
-  public String getHttp_proxy_password();
-  
-  public File getTmpDirFile();
+    public String getHttp_proxy_password();
 
-  public SSLContext getSSLContext();
+    public File getTmpDirFile();
+
+    public SSLContext getSSLContext();
 }

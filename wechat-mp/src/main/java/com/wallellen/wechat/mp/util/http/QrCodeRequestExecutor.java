@@ -1,7 +1,7 @@
 package com.wallellen.wechat.mp.util.http;
 
 import com.wallellen.wechat.common.bean.result.WxError;
-import  com.wallellen.wechat.common.exception.WxErrorException;
+import com.wallellen.wechat.common.exception.WxErrorException;
 import com.wallellen.wechat.common.util.fs.FileUtils;
 import com.wallellen.wechat.common.util.http.InputStreamResponseHandler;
 import com.wallellen.wechat.common.util.http.RequestExecutor;
@@ -24,44 +24,44 @@ import java.util.UUID;
 
 /**
  * 获得QrCode图片 请求执行器
- * @author chanjarster
  *
+ * @author chanjarster
  */
 public class QrCodeRequestExecutor implements RequestExecutor<File, WxMpQrCodeTicket> {
 
-  @Override
-  public File execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, WxMpQrCodeTicket ticket) throws WxErrorException, ClientProtocolException, IOException {
-    if (ticket != null) {
-      if (uri.indexOf('?') == -1) {
-        uri += '?';
-      }
-      uri += uri.endsWith("?") ? 
-          "ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8") 
-          : 
-          "&ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8");
-    }
-    
-    HttpGet httpGet = new HttpGet(uri);
-    if (httpProxy != null) {
-      RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
-      httpGet.setConfig(config);
-    }
-
-    try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
-      Header[] contentTypeHeader = response.getHeaders("Content-Type");
-      if (contentTypeHeader != null && contentTypeHeader.length > 0) {
-        // 出错
-        if (ContentType.TEXT_PLAIN.getMimeType().equals(contentTypeHeader[0].getValue())) {
-          String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-          throw new WxErrorException(WxError.fromJson(responseContent));
+    @Override
+    public File execute(CloseableHttpClient httpclient, HttpHost httpProxy, String uri, WxMpQrCodeTicket ticket) throws WxErrorException, ClientProtocolException, IOException {
+        if (ticket != null) {
+            if (uri.indexOf('?') == -1) {
+                uri += '?';
+            }
+            uri += uri.endsWith("?") ?
+                    "ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8")
+                    :
+                    "&ticket=" + URLEncoder.encode(ticket.getTicket(), "UTF-8");
         }
-      }
-      InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response);
 
-      File localFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
-      return localFile;
+        HttpGet httpGet = new HttpGet(uri);
+        if (httpProxy != null) {
+            RequestConfig config = RequestConfig.custom().setProxy(httpProxy).build();
+            httpGet.setConfig(config);
+        }
+
+        try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+            Header[] contentTypeHeader = response.getHeaders("Content-Type");
+            if (contentTypeHeader != null && contentTypeHeader.length > 0) {
+                // 出错
+                if (ContentType.TEXT_PLAIN.getMimeType().equals(contentTypeHeader[0].getValue())) {
+                    String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
+                    throw new WxErrorException(WxError.fromJson(responseContent));
+                }
+            }
+            InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response);
+
+            File localFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
+            return localFile;
+        }
+
     }
-
-  }
 
 }
