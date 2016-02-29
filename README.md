@@ -1,7 +1,7 @@
 wechat
 
 [![Build Status](https://travis-ci.org/wallellen/wechat.svg?branch=master)](https://travis-ci.org/wallellen/wechat)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/chanjarster/weixin-java-tools?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/wallellen/wechat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ===========
 
